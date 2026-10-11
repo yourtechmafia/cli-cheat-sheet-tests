@@ -198,11 +198,11 @@ D["api-json"] = {
 D["ndjson"] = {
     "posix.sh": "jq -r '[.body.price, .body.title] | @tsv' books.ndjson | sort\n",
     "pwsh.ps1": "Get-Content books.ndjson | ConvertFrom-Json | ForEach-Object body | Sort-Object price | Format-Table price, title\n",
-    "meta.json": {"extra_files": ["books.ndjson"]},
+    "meta.json": {"extra_files": ["ndjson/books.ndjson"]},
 }
 D["ndjson-51"] = {
     "powershell.ps1": "Get-Content books.ndjson -Encoding UTF8 | ConvertFrom-Json | ForEach-Object body | Sort-Object price | Format-Table price, title\n",
-    "meta.json": {"os": ["windows"], "extra_files": ["books.ndjson"]},
+    "meta.json": {"os": ["windows"], "extra_files": ["ndjson/books.ndjson"]},
 }
 
 # --- Safety ------------------------------------------------------------------------------

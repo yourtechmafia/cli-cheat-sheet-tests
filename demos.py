@@ -92,7 +92,7 @@ def run_demo(name, root):
             continue
         cwd = make_practice(root)
         for extra in meta.get("extra_files", []):
-            shutil.copy(os.path.join(folder, extra), os.path.join(cwd, extra))
+            shutil.copy(os.path.join(DEMOS, extra), os.path.join(cwd, os.path.basename(extra)))
         env = dict(os.environ)
         env["PATH"] = stock_path()
         env.setdefault("TERM", "xterm-256color")
@@ -158,7 +158,11 @@ def main():
     if args.only:
         names = [n for n in names if any(o in n for o in args.only)]
     for name in names:
-        for rec in run_demo(name, root):
+        try:
+            recs = run_demo(name, root)
+        except Exception as exc:  # noqa: BLE001  one broken example must not hide the others
+            recs = [{"demo": name, "shell": "-", "file": "-", "code": "", "exit": None, "output": f"runner error: {exc}"}]
+        for rec in recs:
             report["demos"].append(rec)
             print(f"[{rec['shell']:10}] exit {str(rec['exit']):>4}  {name}", flush=True)
     shutil.rmtree(root, ignore_errors=True)
