@@ -2,9 +2,9 @@ task_id,task,shell,status,exit,command
 1,Where am I (print the current folder),pwsh,works,0,Get-Location
 2,"List files, including hidden ones",pwsh,works,0,Get-ChildItem -Force
 3,Change folder,pwsh,works,0,"Set-Location docs
-Get-Location"
+(Get-Location).Path"
 4,Go to your home folder,pwsh,works,0,"Set-Location ~
-Get-Location"
+(Get-Location).Path"
 5,Make nested folders,pwsh,works,0,New-Item -ItemType Directory -Path a/b/c -Force
 6,Create an empty file,pwsh,works,0,New-Item -ItemType File -Path empty.txt
 7,Copy a file,pwsh,works,0,Copy-Item notes.txt notes-copy.txt
@@ -24,24 +24,24 @@ Get-Content log.txt -Tail 3"
 $LASTEXITCODE"
 20,Run B only if A succeeds,pwsh,works,0,mkdir out && echo created
 21,Read an environment variable,pwsh,works,0,$env:USERPROFILE
-22,Set an environment variable for this session,pwsh,works,0,"$env:API_KEY = ""abc123""
-$env:API_KEY"
-23,Set an environment variable permanently,pwsh,works,0,"[Environment]::SetEnvironmentVariable(""API_KEY"", ""abc123"", ""User"")"
+22,Set an environment variable for this session,pwsh,works,0,"$env:GREETING = ""hello""
+$env:GREETING"
+23,Set an environment variable permanently,pwsh,works,0,"[Environment]::SetEnvironmentVariable(""GREETING"", ""hello"", ""User"")"
 24,Show PATH,pwsh,works,0,$env:PATH
 25,Find which program a command runs,pwsh,works,0,Get-Command curl
 26,Get help for a command,pwsh,works,0,Get-Help Get-ChildItem
 27,Search command history,pwsh,interactive,,
 28,Clear the screen,pwsh,works,0,Clear-Host
-29,List and stop a process,pwsh,works,0,"Get-Process -Id 3860
-Stop-Process -Id 3860"
+29,List and stop a process,pwsh,works,0,"Get-Process -Id 7712
+Stop-Process -Id 7712"
 30,Download a URL to a file,pwsh,works,0,Invoke-WebRequest https://example.com -OutFile page.html
 31,Run a script,pwsh,works,0,.\hello.ps1
 1,Where am I (print the current folder),powershell,works,0,Get-Location
 2,"List files, including hidden ones",powershell,works,0,Get-ChildItem -Force
 3,Change folder,powershell,works,0,"Set-Location docs
-Get-Location"
+(Get-Location).Path"
 4,Go to your home folder,powershell,works,0,"Set-Location ~
-Get-Location"
+(Get-Location).Path"
 5,Make nested folders,powershell,works,0,New-Item -ItemType Directory -Path a/b/c -Force
 6,Create an empty file,powershell,works,0,New-Item -ItemType File -Path empty.txt
 7,Copy a file,powershell,works,0,Copy-Item notes.txt notes-copy.txt
@@ -61,16 +61,16 @@ Get-Content log.txt -Tail 3"
 $LASTEXITCODE"
 20,Run B only if A succeeds,powershell,works,0,mkdir out; if ($?) { echo created }
 21,Read an environment variable,powershell,works,0,$env:USERPROFILE
-22,Set an environment variable for this session,powershell,works,0,"$env:API_KEY = ""abc123""
-$env:API_KEY"
-23,Set an environment variable permanently,powershell,works,0,"[Environment]::SetEnvironmentVariable(""API_KEY"", ""abc123"", ""User"")"
+22,Set an environment variable for this session,powershell,works,0,"$env:GREETING = ""hello""
+$env:GREETING"
+23,Set an environment variable permanently,powershell,works,0,"[Environment]::SetEnvironmentVariable(""GREETING"", ""hello"", ""User"")"
 24,Show PATH,powershell,works,0,$env:PATH
 25,Find which program a command runs,powershell,works,0,Get-Command curl
 26,Get help for a command,powershell,works,0,Get-Help Get-ChildItem
 27,Search command history,powershell,interactive,,
 28,Clear the screen,powershell,works,0,Clear-Host
-29,List and stop a process,powershell,works,0,"Get-Process -Id 10424
-Stop-Process -Id 10424"
+29,List and stop a process,powershell,works,0,"Get-Process -Id 7108
+Stop-Process -Id 7108"
 30,Download a URL to a file,powershell,works,0,Invoke-WebRequest https://example.com -OutFile page.html
 31,Run a script,powershell,works,0,.\hello.ps1
 1,Where am I (print the current folder),cmd,works,0,cd
@@ -97,15 +97,15 @@ cd"
 echo %ERRORLEVEL%"
 20,Run B only if A succeeds,cmd,works,0,mkdir out && echo created
 21,Read an environment variable,cmd,works,0,echo %USERPROFILE%
-22,Set an environment variable for this session,cmd,works,0,"set API_KEY=abc123
-echo %API_KEY%"
-23,Set an environment variable permanently,cmd,works,0,setx API_KEY abc123
+22,Set an environment variable for this session,cmd,works,0,"set GREETING=hello
+echo %GREETING%"
+23,Set an environment variable permanently,cmd,works,0,setx GREETING hello
 24,Show PATH,cmd,works,0,echo %PATH%
 25,Find which program a command runs,cmd,works,0,where curl
 26,Get help for a command,cmd,works,1,dir /?
 27,Search command history,cmd,interactive,,
 28,Clear the screen,cmd,works,0,cls
-29,List and stop a process,cmd,works,0,"tasklist /fi ""PID eq 6652""
-taskkill /pid 6652 /f"
+29,List and stop a process,cmd,works,0,"tasklist /fi ""PID eq 9720""
+taskkill /pid 9720 /f"
 30,Download a URL to a file,cmd,works,0,curl -sSo page.html https://example.com
 31,Run a script,cmd,works,0,hello.cmd

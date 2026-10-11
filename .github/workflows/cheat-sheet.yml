@@ -52,7 +52,7 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           name: results-${{ matrix.label }}
-          path: results/
+          path: results/*${{ matrix.label }}*
 
   macos:
     runs-on: macos-latest
@@ -71,7 +71,7 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           name: results-macos-ci
-          path: results/
+          path: results/*macos-ci*
 
   ubuntu:
     runs-on: ubuntu-latest
@@ -103,4 +103,4 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           name: results-ubuntu-26.04
-          path: results/
+          path: results/*ubuntu-26.04*

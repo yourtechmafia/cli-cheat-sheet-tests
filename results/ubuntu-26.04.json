@@ -21,7 +21,7 @@
       "ok": true,
       "exit": 0,
       "seconds": 0.0,
-      "stdout": "/tmp/cli-cheat-sheet-94chl7gm/practice-zfu9phs7\n",
+      "stdout": "/tmp/cli-cheat-sheet-h5jdxoq8/practice-c9d2qwfs\n",
       "stderr": "",
       "persist_out": ""
     },
@@ -34,7 +34,7 @@
       "ok": true,
       "exit": 0,
       "seconds": 0.01,
-      "stdout": "total 52\ndrwx------ 4 root root 4096 Oct 11 11:56 .\ndrwx------ 8 root root 4096 Oct 11 11:56 ..\n-rw-r--r-- 1 root root    7 Oct 11 11:56 .hidden\ndrwxr-xr-x 3 root root 4096 Oct 11 11:56 docs\n-rw-r--r-- 1 root root   10 Oct 11 11:56 file.txt\ndrwxr-xr-x 2 root root 4096 Oct 11 11:56 folder\n-rw-r--r-- 1 root root   43 Oct 11 11:56 hello.cmd\n-rw-r--r-- 1 root root   37 Oct 11 11:56 hello.ps1\n-rw-r--r-- 1 root root   43 Oct 11 11:56 hello.sh\n-rw-r--r-- 1 root root  222 Oct 11 11:56 log.txt\n-rw-r--r-- 1 root root   33 Oct 11 11:56 names.txt\n-rw-r--r-- 1 root root   12 Oct 11 11:56 notes.txt\n-rw-r--r-- 1 root root   10 Oct 11 11:56 old.txt\n",
+      "stdout": "total 52\ndrwx------ 4 root root 4096 Oct 11 12:17 .\ndrwx------ 8 root root 4096 Oct 11 12:17 ..\n-rw-r--r-- 1 root root    7 Oct 11 12:17 .hidden\ndrwxr-xr-x 3 root root 4096 Oct 11 12:17 docs\n-rw-r--r-- 1 root root   10 Oct 11 12:17 file.txt\ndrwxr-xr-x 2 root root 4096 Oct 11 12:17 folder\n-rw-r--r-- 1 root root   43 Oct 11 12:17 hello.cmd\n-rw-r--r-- 1 root root   37 Oct 11 12:17 hello.ps1\n-rw-r--r-- 1 root root   43 Oct 11 12:17 hello.sh\n-rw-r--r-- 1 root root  222 Oct 11 12:17 log.txt\n-rw-r--r-- 1 root root   33 Oct 11 12:17 names.txt\n-rw-r--r-- 1 root root   12 Oct 11 12:17 notes.txt\n-rw-r--r-- 1 root root   10 Oct 11 12:17 old.txt\n",
       "stderr": "",
       "persist_out": ""
     },
@@ -47,7 +47,7 @@
       "ok": true,
       "exit": 0,
       "seconds": 0.0,
-      "stdout": "/tmp/cli-cheat-sheet-94chl7gm/practice-b8cjeaon/docs\n",
+      "stdout": "/tmp/cli-cheat-sheet-h5jdxoq8/practice-twnw439k/docs\n",
       "stderr": "",
       "persist_out": ""
     },
@@ -60,7 +60,7 @@
       "ok": true,
       "exit": 0,
       "seconds": 0.0,
-      "stdout": "/tmp/cli-cheat-sheet-94chl7gm/home-wdm2c974\n",
+      "stdout": "/tmp/cli-cheat-sheet-h5jdxoq8/home-hk9np71s\n",
       "stderr": "",
       "persist_out": ""
     },
@@ -189,7 +189,7 @@
       "status": "works",
       "ok": true,
       "exit": -15,
-      "seconds": 5.0,
+      "seconds": 5.01,
       "stdout": "line 1 INFO starting\nline 2 INFO loading config\nline 3 ERROR config missing\nline 4 INFO retrying\nline 5 INFO connected\nline 6 WARN slow response\nline 7 ERROR timeout\nline 8 INFO retrying\nline 9 INFO done\nline 10 INFO exit\nline 11 appended\n",
       "stderr": "",
       "persist_out": ""
@@ -281,7 +281,7 @@
       "ok": true,
       "exit": 0,
       "seconds": 0.0,
-      "stdout": "/tmp/cli-cheat-sheet-94chl7gm/home-0b061csm\n",
+      "stdout": "/tmp/cli-cheat-sheet-h5jdxoq8/home-5ep3rxtg\n",
       "stderr": "",
       "persist_out": ""
     },
@@ -289,12 +289,12 @@
       "task_id": 22,
       "task": "Set an environment variable for this session",
       "shell": "bash",
-      "command": "export API_KEY=abc123\necho $API_KEY",
+      "command": "export GREETING=hello\necho $GREETING",
       "status": "works",
       "ok": true,
       "exit": 0,
       "seconds": 0.0,
-      "stdout": "abc123\n",
+      "stdout": "hello\n",
       "stderr": "",
       "persist_out": ""
     },
@@ -302,14 +302,14 @@
       "task_id": 23,
       "task": "Set an environment variable permanently",
       "shell": "bash",
-      "command": "echo 'export API_KEY=abc123' >> ~/.bashrc",
+      "command": "echo 'export GREETING=hello' >> ~/.bashrc",
       "status": "works",
       "ok": true,
       "exit": 0,
       "seconds": 0.0,
       "stdout": "",
       "stderr": "",
-      "persist_out": "abc123\n"
+      "persist_out": "hello\n"
     },
     {
       "task_id": 24,
@@ -393,7 +393,7 @@
       "status": "works",
       "ok": true,
       "exit": 0,
-      "seconds": 0.04,
+      "seconds": 0.03,
       "stdout": "",
       "stderr": "",
       "persist_out": ""

@@ -22,7 +22,7 @@
       "followup": {
         "command": "ll notes.txt",
         "exit": 0,
-        "output": "-rw-r--r--  1 runner  staff  12 Oct 11 11:56 notes.txt\n"
+        "output": "-rw-r--r--  1 runner  staff  12 Oct 11 12:17 notes.txt\n"
       }
     },
     {
@@ -35,7 +35,7 @@
       "followup": {
         "command": "ll notes.txt",
         "exit": 0,
-        "output": "bash: no job control in this shell\n-rw-r--r--  1 runner  staff  12 Oct 11 11:56 notes.txt\n"
+        "output": "bash: no job control in this shell\n-rw-r--r--  1 runner  staff  12 Oct 11 12:17 notes.txt\n"
       }
     },
     {
@@ -44,7 +44,7 @@
       "file": "posix.sh",
       "code": "git init -q practice-repo\ncd practice-repo\necho \"hello\" > README.md\ngit add README.md\ngit commit -m \"Fix typo\"\n",
       "exit": 0,
-      "output": "[main (root-commit) 9637d00] Fix typo\n 1 file changed, 1 insertion(+)\n create mode 100644 README.md\n"
+      "output": "[main (root-commit) 62b4893] Fix typo\n 1 file changed, 1 insertion(+)\n create mode 100644 README.md\n"
     },
     {
       "demo": "anatomy",
@@ -52,7 +52,7 @@
       "file": "posix.sh",
       "code": "git init -q practice-repo\ncd practice-repo\necho \"hello\" > README.md\ngit add README.md\ngit commit -m \"Fix typo\"\n",
       "exit": 0,
-      "output": "[main (root-commit) 9637d00] Fix typo\n 1 file changed, 1 insertion(+)\n create mode 100644 README.md\n"
+      "output": "[main (root-commit) 62b4893] Fix typo\n 1 file changed, 1 insertion(+)\n create mode 100644 README.md\n"
     },
     {
       "demo": "and-or",
@@ -76,7 +76,7 @@
       "file": "posix.sh",
       "code": "curl -s https://api.github.com/repos/curl/curl/releases/latest | jq -r '.tag_name, .published_at'\n",
       "exit": 0,
-      "output": "null\nnull\n"
+      "output": "curl-8_22_0\n2026-09-02T05:59:35Z\n"
     },
     {
       "demo": "api-json",
@@ -84,7 +84,7 @@
       "file": "posix.sh",
       "code": "curl -s https://api.github.com/repos/curl/curl/releases/latest | jq -r '.tag_name, .published_at'\n",
       "exit": 0,
-      "output": "null\nnull\n"
+      "output": "curl-8_22_0\n2026-09-02T05:59:35Z\n"
     },
     {
       "demo": "double-dash",
@@ -292,7 +292,7 @@
       "file": "posix.sh",
       "code": "ls -lS *.txt | head -n 3\n",
       "exit": 0,
-      "output": "-rw-r--r--  1 runner  staff  222 Oct 11 11:56 log.txt\n-rw-r--r--  1 runner  staff   33 Oct 11 11:56 names.txt\n-rw-r--r--  1 runner  staff   12 Oct 11 11:56 notes.txt\n"
+      "output": "-rw-r--r--  1 runner  staff  222 Oct 11 12:17 log.txt\n-rw-r--r--  1 runner  staff   33 Oct 11 12:17 names.txt\n-rw-r--r--  1 runner  staff   12 Oct 11 12:17 notes.txt\n"
     },
     {
       "demo": "pipe-objects",
@@ -300,7 +300,7 @@
       "file": "posix.sh",
       "code": "ls -lS *.txt | head -n 3\n",
       "exit": 0,
-      "output": "-rw-r--r--  1 runner  staff  222 Oct 11 11:56 log.txt\n-rw-r--r--  1 runner  staff   33 Oct 11 11:56 names.txt\n-rw-r--r--  1 runner  staff   12 Oct 11 11:56 notes.txt\n"
+      "output": "-rw-r--r--  1 runner  staff  222 Oct 11 12:17 log.txt\n-rw-r--r--  1 runner  staff   33 Oct 11 12:17 names.txt\n-rw-r--r--  1 runner  staff   12 Oct 11 12:17 notes.txt\n"
     },
     {
       "demo": "quote-json",

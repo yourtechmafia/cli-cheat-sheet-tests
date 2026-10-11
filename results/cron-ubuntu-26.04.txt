@@ -3,5 +3,5 @@ $ (crontab -l 2>/dev/null; echo "* * * * * $PWD/hello.sh >> $PWD/hello.log 2>&1"
 $ crontab -l
 * * * * * ~/practice/hello.sh >> ~/practice/hello.log 2>&1
 $ cat hello.log
-Hello from cron at 11:57:01
+Hello from cron at 12:18:01
 $ crontab -l   (after crontab -r)

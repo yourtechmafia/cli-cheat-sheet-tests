@@ -29,7 +29,7 @@ Follow-up in a new interactive shell: `ll notes.txt` (exit 0)
 ```
 bash: cannot set terminal process group (3532): Inappropriate ioctl for device
 bash: no job control in this shell
--rw-r--r-- 1 root root 12 Oct 11 11:56 notes.txt
+-rw-r--r-- 1 root root 12 Oct 11 12:17 notes.txt
 ```
 
 ## anatomy / bash (exit 0)
@@ -45,7 +45,7 @@ git commit -m "Fix typo"
 Output:
 
 ```
-[master (root-commit) 9637d00] Fix typo
+[master (root-commit) a3dab61] Fix typo
  1 file changed, 1 insertion(+)
  create mode 100644 README.md
 ```
@@ -279,9 +279,9 @@ ls -lS *.txt | head -n 3
 Output:
 
 ```
--rw-r--r-- 1 root root 222 Oct 11 11:56 log.txt
--rw-r--r-- 1 root root  33 Oct 11 11:56 names.txt
--rw-r--r-- 1 root root  12 Oct 11 11:56 notes.txt
+-rw-r--r-- 1 root root 222 Oct 11 12:17 log.txt
+-rw-r--r-- 1 root root  33 Oct 11 12:17 names.txt
+-rw-r--r-- 1 root root  12 Oct 11 12:17 notes.txt
 ```
 
 ## quote-json / bash (exit 0)

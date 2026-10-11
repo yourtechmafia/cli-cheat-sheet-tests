@@ -24,16 +24,16 @@ tail -n 3 log.txt"
 echo $?"
 20,Run B only if A succeeds,zsh,works,0,mkdir out && echo created
 21,Read an environment variable,zsh,works,0,echo $HOME
-22,Set an environment variable for this session,zsh,works,0,"export API_KEY=abc123
-echo $API_KEY"
-23,Set an environment variable permanently,zsh,works,0,echo 'export API_KEY=abc123' >> ~/.zshrc
+22,Set an environment variable for this session,zsh,works,0,"export GREETING=hello
+echo $GREETING"
+23,Set an environment variable permanently,zsh,works,0,echo 'export GREETING=hello' >> ~/.zshrc
 24,Show PATH,zsh,works,0,echo $PATH
 25,Find which program a command runs,zsh,works,0,command -v curl
 26,Get help for a command,zsh,failed,1,ls --help
 27,Search command history,zsh,interactive,,
 28,Clear the screen,zsh,works,0,clear
-29,List and stop a process,zsh,works,0,"ps -p 1289
-kill 1289"
+29,List and stop a process,zsh,works,0,"ps -p 2842
+kill 2842"
 30,Download a URL to a file,zsh,works,0,curl -sSo page.html https://example.com
 31,Run a script,zsh,works,0,"chmod +x hello.sh
 ./hello.sh"
@@ -62,16 +62,16 @@ tail -n 3 log.txt"
 echo $?"
 20,Run B only if A succeeds,bash,works,0,mkdir out && echo created
 21,Read an environment variable,bash,works,0,echo $HOME
-22,Set an environment variable for this session,bash,works,0,"export API_KEY=abc123
-echo $API_KEY"
-23,Set an environment variable permanently,bash,works,0,echo 'export API_KEY=abc123' >> ~/.bashrc
+22,Set an environment variable for this session,bash,works,0,"export GREETING=hello
+echo $GREETING"
+23,Set an environment variable permanently,bash,works,0,echo 'export GREETING=hello' >> ~/.bashrc
 24,Show PATH,bash,works,0,echo $PATH
 25,Find which program a command runs,bash,works,0,command -v curl
 26,Get help for a command,bash,failed,1,ls --help
 27,Search command history,bash,interactive,,
 28,Clear the screen,bash,works,0,clear
-29,List and stop a process,bash,works,0,"ps -p 1353
-kill 1353"
+29,List and stop a process,bash,works,0,"ps -p 3079
+kill 3079"
 30,Download a URL to a file,bash,works,0,curl -sSo page.html https://example.com
 31,Run a script,bash,works,0,"chmod +x hello.sh
 ./hello.sh"

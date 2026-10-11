@@ -22,7 +22,7 @@
       "followup": {
         "command": "ll notes.txt",
         "exit": 0,
-        "output": "\n    Directory: ~/practice\n\nMode                 LastWriteTime         Length Name\n----                 -------------         ------ ----\n-a---          10/11/2026  5:01 AM             12 notes.txt\n\n"
+        "output": "\n    Directory: ~/practice\n\nMode                 LastWriteTime         Length Name\n----                 -------------         ------ ----\n-a---          10/11/2026  5:22 AM             12 notes.txt\n\n"
       }
     },
     {
@@ -31,11 +31,11 @@
       "file": "pwsh.ps1",
       "code": "New-Item -ItemType File -Path $PROFILE -Force | Out-Null\nAdd-Content -Path $PROFILE -Value 'function ll { Get-ChildItem -Force @args }'\n",
       "exit": 0,
-      "output": "",
+      "output": "\n",
       "followup": {
         "command": "ll notes.txt",
         "exit": 0,
-        "output": "\n\n    Directory: ~/practice\n\n\nMode                 LastWriteTime         Length Name                                                                 \n----                 -------------         ------ ----                                                                 \n-a----        10/11/2026   5:01 AM             12 notes.txt                                                            \n\n\n"
+        "output": "\n\n    Directory: ~/practice\n\n\nMode                 LastWriteTime         Length Name                                                                 \n----                 -------------         ------ ----                                                                 \n-a----        10/11/2026   5:22 AM             12 notes.txt                                                            \n\n\n"
       }
     },
     {
@@ -52,7 +52,7 @@
       "file": "pwsh.ps1",
       "code": "mkdir out && echo \"created\" || echo \"failed\"\nmkdir out && echo \"created\" || echo \"failed\"\n",
       "exit": 0,
-      "output": "\n    Directory: ~/practice\n\nMode                 LastWriteTime         Length Name\n----                 -------------         ------ ----\nd----          10/11/2026  5:01 AM                out\ncreated\nNew-Item: \nLine |\n   3 |  mkdir out && echo \"created\" || echo \"failed\"\n     |  ~~~~~~~~~\n     | An item with the specified name ~/practice\\out already exists.\nfailed\n\n"
+      "output": "\n    Directory: ~/practice\n\nMode                 LastWriteTime         Length Name\n----                 -------------         ------ ----\nd----          10/11/2026  5:22 AM                out\ncreated\nNew-Item: \nLine |\n   2 |  mkdir out && echo \"created\" || echo \"failed\"\n     |  ~~~~~~~~~\n     | An item with the specified name ~/practice\\out already exists.\nfailed\n\n"
     },
     {
       "demo": "and-or",
@@ -60,7 +60,7 @@
       "file": "powershell.ps1",
       "code": "mkdir out && echo \"created\"\n",
       "exit": 1,
-      "output": "\nAt line:3 char:11\n+ mkdir out && echo \"created\"\n+           ~~\nThe token '&&' is not a valid statement separator in this version.\n    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException\n    + FullyQualifiedErrorId : InvalidEndOfLine\n \n"
+      "output": "\nAt line:1 char:11\n+ mkdir out && echo \"created\"\n+           ~~\nThe token '&&' is not a valid statement separator in this version.\n    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException\n    + FullyQualifiedErrorId : InvalidEndOfLine\n \n"
     },
     {
       "demo": "and-or",
@@ -76,7 +76,7 @@
       "file": "powershell.ps1",
       "code": "mkdir out | Out-Null; if ($?) { \"created\" } else { \"failed\" }\nmkdir out 2>$null | Out-Null; if ($?) { \"created\" } else { \"failed\" }\n",
       "exit": 0,
-      "output": "created\nfailed\n"
+      "output": "\ncreated\nfailed\n"
     },
     {
       "demo": "api-json",
@@ -92,7 +92,7 @@
       "file": "pwsh.ps1",
       "code": "Invoke-RestMethod https://api.github.com/repos/curl/curl/releases/latest | Select-Object tag_name, published_at\n",
       "exit": 0,
-      "output": "\ntag_name    published_at        \n--------    ------------        \ncurl-8_22_0 2026-09-02T05:59:35Z\n\n\n"
+      "output": "\ntag_name    published_at        \n--------    ------------        \ncurl-8_22_0 2026-09-02T05:59:35Z\n"
     },
     {
       "demo": "bash-in-powershell",
@@ -100,7 +100,7 @@
       "file": "pwsh.ps1",
       "code": "ls -la\nsort -u names.txt\ngrep zzz log.txt\necho $?\necho $PATH\nfind . -name \"*.txt\"\ncp -r docs docs-backup\nTest-Path docs-backup\\deep\\c.txt\n",
       "exit": 0,
-      "output": "Get-ChildItem: \nLine |\n   2 |  ls -la\n     |     ~~~\n     | A parameter cannot be found that matches parameter name 'la'.\ngrep: \nLine |\n   4 |  grep zzz log.txt\n     |  ~~~~\n     | The term 'grep' is not recognized as a name of a cmdlet, function, script file, or executable program.\nCheck the spelling of the name, or if a path was included, verify that the path is correct and try again.\nFalse\nFIND: Parameter format not correct\nTrue\n"
+      "output": "Get-ChildItem: A parameter cannot be found that matches parameter name 'la'.\ngrep: \nLine |\n   3 |  grep zzz log.txt\n     |  ~~~~\n     | The term 'grep' is not recognized as a name of a cmdlet, function, script file, or executable program.\nCheck the spelling of the name, or if a path was included, verify that the path is correct and try again.\nFalse\nFIND: Parameter format not correct\nTrue\n"
     },
     {
       "demo": "bash-in-powershell",
@@ -108,7 +108,7 @@
       "file": "pwsh.ps1",
       "code": "ls -la\nsort -u names.txt\ngrep zzz log.txt\necho $?\necho $PATH\nfind . -name \"*.txt\"\ncp -r docs docs-backup\nTest-Path docs-backup\\deep\\c.txt\n",
       "exit": 0,
-      "output": "\nFalse\nFIND: Parameter format not correct\nTrue\nGet-ChildItem : A parameter cannot be found that matches parameter name 'la'.\nAt line:3 char:4\n+ ls -la\n+    ~~~\n    + CategoryInfo          : InvalidArgument: (:) [Get-ChildItem], ParameterBindingException\n    + FullyQualifiedErrorId : NamedParameterNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand\n \ngrep : The term 'grep' is not recognized as the name of a cmdlet, function, script file, or operable program. Check \nthe spelling of the name, or if a path was included, verify that the path is correct and try again.\nAt line:5 char:1\n+ grep zzz log.txt\n+ ~~~~\n    + CategoryInfo          : ObjectNotFound: (grep:String) [], CommandNotFoundException\n    + FullyQualifiedErrorId : CommandNotFoundException\n \n"
+      "output": "\nFalse\nFIND: Parameter format not correct\nTrue\nGet-ChildItem : A parameter cannot be found that matches parameter name 'la'.\nAt line:1 char:4\n+ ls -la\n+    ~~~\n    + CategoryInfo          : InvalidArgument: (:) [Get-ChildItem], ParameterBindingException\n    + FullyQualifiedErrorId : NamedParameterNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand\n \ngrep : The term 'grep' is not recognized as the name of a cmdlet, function, script file, or operable program. Check \nthe spelling of the name, or if a path was included, verify that the path is correct and try again.\nAt line:3 char:1\n+ grep zzz log.txt\n+ ~~~~\n    + CategoryInfo          : ObjectNotFound: (grep:String) [], CommandNotFoundException\n    + FullyQualifiedErrorId : CommandNotFoundException\n \n"
     },
     {
       "demo": "double-dash",
@@ -116,7 +116,7 @@
       "file": "pwsh.ps1",
       "code": "New-Item -ItemType File \"-oops.txt\" | Out-Null\nGet-ChildItem -oops.txt\nGet-ChildItem \"-oops.txt\" -Name\nRemove-Item \"-oops.txt\"\n",
       "exit": 0,
-      "output": "Get-ChildItem: \nLine |\n   3 |  Get-ChildItem -oops.txt\n     |                ~~~~~\n     | A parameter cannot be found that matches parameter name 'oops'.\n-oops.txt\n"
+      "output": "Get-ChildItem: \nLine |\n   2 |  Get-ChildItem -oops.txt\n     |                ~~~~~\n     | A parameter cannot be found that matches parameter name 'oops'.\n-oops.txt\n"
     },
     {
       "demo": "double-dash",
@@ -124,7 +124,7 @@
       "file": "pwsh.ps1",
       "code": "New-Item -ItemType File \"-oops.txt\" | Out-Null\nGet-ChildItem -oops.txt\nGet-ChildItem \"-oops.txt\" -Name\nRemove-Item \"-oops.txt\"\n",
       "exit": 0,
-      "output": "\n-oops.txt\nGet-ChildItem : A parameter cannot be found that matches parameter name 'oops'.\nAt line:4 char:15\n+ Get-ChildItem -oops.txt\n+               ~~~~~\n    + CategoryInfo          : InvalidArgument: (:) [Get-ChildItem], ParameterBindingException\n    + FullyQualifiedErrorId : NamedParameterNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand\n \n"
+      "output": "\n-oops.txt\nGet-ChildItem : A parameter cannot be found that matches parameter name 'oops'.\nAt line:2 char:15\n+ Get-ChildItem -oops.txt\n+               ~~~~~\n    + CategoryInfo          : InvalidArgument: (:) [Get-ChildItem], ParameterBindingException\n    + FullyQualifiedErrorId : NamedParameterNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand\n \n"
     },
     {
       "demo": "double-dash",
@@ -220,7 +220,7 @@
       "file": "powershell.ps1",
       "code": ".\\hello.ps1\n",
       "exit": 1,
-      "output": "\n.\\hello.ps1 : File ~/practice\\hello.ps1 cannot be \nloaded because running scripts is disabled on this system. For more information, see about_Execution_Policies at \nhttps:/go.microsoft.com/fwlink/?LinkID=135170.\nAt line:3 char:1\n+ .\\hello.ps1\n+ ~~~~~~~~~~~\n    + CategoryInfo          : SecurityError: (:) [], PSSecurityException\n    + FullyQualifiedErrorId : UnauthorizedAccess\n"
+      "output": "\n.\\hello.ps1 : File ~/practice\\hello.ps1 cannot be \nloaded because running scripts is disabled on this system. For more information, see about_Execution_Policies at \nhttps:/go.microsoft.com/fwlink/?LinkID=135170.\nAt line:1 char:1\n+ .\\hello.ps1\n+ ~~~~~~~~~~~\n    + CategoryInfo          : SecurityError: (:) [], PSSecurityException\n    + FullyQualifiedErrorId : UnauthorizedAccess\n"
     },
     {
       "demo": "execution-policy-fix",
@@ -228,7 +228,7 @@
       "file": "powershell.ps1",
       "code": "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force\nGet-ExecutionPolicy -Scope CurrentUser\nSet-ExecutionPolicy -ExecutionPolicy Undefined -Scope CurrentUser -Force\n",
       "exit": 1,
-      "output": "\nSet-ExecutionPolicy : The 'Set-ExecutionPolicy' command was found in the module 'Microsoft.PowerShell.Security', but \nthe module could not be loaded. For more information, run 'Import-Module Microsoft.PowerShell.Security'.\nAt line:3 char:1\n+ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser  ...\n+ ~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : ObjectNotFound: (Set-ExecutionPolicy:String) [], CommandNotFoundException\n    + FullyQualifiedErrorId : CouldNotAutoloadMatchingModule\n \nGet-ExecutionPolicy : The 'Get-ExecutionPolicy' command was found in the module 'Microsoft.PowerShell.Security', but \nthe module could not be loaded. For more information, run 'Import-Module Microsoft.PowerShell.Security'.\nAt line:4 char:1\n+ Get-ExecutionPolicy -Scope CurrentUser\n+ ~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : ObjectNotFound: (Get-ExecutionPolicy:String) [], CommandNotFoundException\n    + FullyQualifiedErrorId : CouldNotAutoloadMatchingModule\n \nSet-ExecutionPolicy : The 'Set-ExecutionPolicy' command was found in the module 'Microsoft.PowerShell.Security', but \nthe module could not be loaded. For more information, run 'Import-Module Microsoft.PowerShell.Security'.\nAt line:5 char:1\n+ Set-ExecutionPolicy -ExecutionPolicy Undefined -Scope CurrentUser -Fo ...\n+ ~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : ObjectNotFound: (Set-ExecutionPolicy:String) [], CommandNotFoundException\n    + FullyQualifiedErrorId : CouldNotAutoloadMatchingModule\n \n"
+      "output": "\nSet-ExecutionPolicy : The 'Set-ExecutionPolicy' command was found in the module 'Microsoft.PowerShell.Security', but \nthe module could not be loaded. For more information, run 'Import-Module Microsoft.PowerShell.Security'.\nAt line:1 char:1\n+ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser  ...\n+ ~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : ObjectNotFound: (Set-ExecutionPolicy:String) [], CommandNotFoundException\n    + FullyQualifiedErrorId : CouldNotAutoloadMatchingModule\n \nGet-ExecutionPolicy : The 'Get-ExecutionPolicy' command was found in the module 'Microsoft.PowerShell.Security', but \nthe module could not be loaded. For more information, run 'Import-Module Microsoft.PowerShell.Security'.\nAt line:2 char:1\n+ Get-ExecutionPolicy -Scope CurrentUser\n+ ~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : ObjectNotFound: (Get-ExecutionPolicy:String) [], CommandNotFoundException\n    + FullyQualifiedErrorId : CouldNotAutoloadMatchingModule\n \nSet-ExecutionPolicy : The 'Set-ExecutionPolicy' command was found in the module 'Microsoft.PowerShell.Security', but \nthe module could not be loaded. For more information, run 'Import-Module Microsoft.PowerShell.Security'.\nAt line:3 char:1\n+ Set-ExecutionPolicy -ExecutionPolicy Undefined -Scope CurrentUser -Fo ...\n+ ~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : ObjectNotFound: (Set-ExecutionPolicy:String) [], CommandNotFoundException\n    + FullyQualifiedErrorId : CouldNotAutoloadMatchingModule\n \n"
     },
     {
       "demo": "exit-codes",
@@ -236,7 +236,7 @@
       "file": "pwsh.ps1",
       "code": "findstr zzz log.txt\n\"findstr exit code: $LASTEXITCODE\"\nnosuchcommand\n\"last command succeeded: $?\"\n",
       "exit": 0,
-      "output": "findstr exit code: 1\nnosuchcommand: \nLine |\n   4 |  nosuchcommand\n     |  ~~~~~~~~~~~~~\n     | The term 'nosuchcommand' is not recognized as a name of a cmdlet, function, script file, or executable program.\nCheck the spelling of the name, or if a path was included, verify that the path is correct and try again.\nlast command succeeded: False\n"
+      "output": "findstr exit code: 1\nnosuchcommand: \nLine |\n   3 |  nosuchcommand\n     |  ~~~~~~~~~~~~~\n     | The term 'nosuchcommand' is not recognized as a name of a cmdlet, function, script file, or executable program.\nCheck the spelling of the name, or if a path was included, verify that the path is correct and try again.\nlast command succeeded: False\n"
     },
     {
       "demo": "exit-codes",
@@ -244,7 +244,7 @@
       "file": "pwsh.ps1",
       "code": "findstr zzz log.txt\n\"findstr exit code: $LASTEXITCODE\"\nnosuchcommand\n\"last command succeeded: $?\"\n",
       "exit": 0,
-      "output": "findstr exit code: 1\nlast command succeeded: False\nnosuchcommand : The term 'nosuchcommand' is not recognized as the name of a cmdlet, function, script file, or operable \nprogram. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.\nAt line:5 char:1\n+ nosuchcommand\n+ ~~~~~~~~~~~~~\n    + CategoryInfo          : ObjectNotFound: (nosuchcommand:String) [], CommandNotFoundException\n    + FullyQualifiedErrorId : CommandNotFoundException\n \n"
+      "output": "findstr exit code: 1\nlast command succeeded: False\nnosuchcommand : The term 'nosuchcommand' is not recognized as the name of a cmdlet, function, script file, or operable \nprogram. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.\nAt line:3 char:1\n+ nosuchcommand\n+ ~~~~~~~~~~~~~\n    + CategoryInfo          : ObjectNotFound: (nosuchcommand:String) [], CommandNotFoundException\n    + FullyQualifiedErrorId : CommandNotFoundException\n \n"
     },
     {
       "demo": "exit-codes",
@@ -268,7 +268,7 @@
       "file": "powershell.ps1",
       "code": "Update-Help -Module Microsoft.PowerShell.Management\nGet-Help Get-ChildItem -Examples\n",
       "exit": 0,
-      "output": "\nNAME\n    Get-ChildItem\n    \nSYNOPSIS\n    Gets the items and child items in one or more specified locations.\n    \n    \n    --------- Example 1: Get child items from a file system directory ---------\n    \n    This example gets the child items from a file system directory. The filenames and subdirectory\n    names are displayed. For empty locations, the command doesn't return any output and returns to the\n    PowerShell prompt.\n    \u0080\n    The `Get-ChildItem` cmdlet uses the **Path** parameter to specify the directory `C:\\Test`.\n    `Get-ChildItem` displays the files and directories in the PowerShell console.\n    \u0080\n    ```powershell\n    Get-ChildItem -Path C:\\Test\n    ```\n    \u0080\n    ```Output\n       Directory: C:\\Test\n    \u0080\n    Mode                LastWriteTime         Length Name\n    ----                -------------         ------ ----\n    d-----        2/15/2019     08:29                Logs\n    -a----        2/13/2019     08:55             26 anotherfile.txt\n    -a----        2/12/2019     15:40         118014 Command.txt\n    -a----         2/1/2019     08:43            183 CreateTestFile.ps1\n    -ar---        2/12/2019     14:31             27 ReadOnlyFile.txt\n    ```\n    \u0080\n    By default `Get-ChildItem` lists the mode (**Attributes**), **LastWriteTime**, file size\n    (**Length**), and the **Name** of the item. The letters in the **Mode** property can be interpreted\n    as follows:\n    \u0080\n    - `l` (link)\n    - `d` (directory)\n    - `a` (archive)\n    - `r` (read-only)\n    - `h` (hidden)\n    - `s` (system)\n    \u0080\n    For more information about the mode flags, see\n    [about_FileSystem_Provider](../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md#attributes-flagsexpress\n    ion).\n    \n     --------- Example 2: Get child item names in a directory ---------\n    \n    This example lists only the names of items in a directory.\n    \u0080\n    The `Get-ChildItem` cmdlet uses the **Path** parameter to specify the directory `C:\\Test`. The\n    **Name** parameter returns only the file or directory names from the specified path. The names\n    returned are relative to the value of the **Path** parameter.\n    \u0080\n    ```powershell\n    Get-ChildItem -Path C:\\Test -Name\n    ```\n    \u0080\n    ```Output\n    Logs\n    anotherfile.txt\n    Command.txt\n    CreateTestFile.ps1\n    ReadOnlyFile.txt\n    ```\n    \n     --------- Example 3: Get child items in the current directory and subdirectories ---------\n    \n    This example displays `.txt` files that are located in the current directory and its\n    subdirectories.\n    \u0080\n    ```powershell\n    Get-ChildItem -Path .\\*.txt -Recurse -Force\n    ```\n    \u0080\n    ```Output\n        Directory: C:\\Test\\Logs\\Adirectory\n    \u0080\n    Mode                LastWriteTime         Length Name\n    ----                -------------         ------ ----\n    -a----        2/12/2019     16:16             20 Afile4.txt\n    -a-h--        2/12/2019     15:52             22 hiddenfile.txt\n    -a----        2/13/2019     13:26             20 LogFile4.txt\n    \u0080\n    Directory: C:\\Test\\Logs\\Backup\n    \u0080\n    Mode                LastWriteTime         Length Name\n    ----                -------------         ------ ----\n    -a----        2/12/2019     16:16             20 ATextFile.txt\n    -a----        2/12/2019     15:50             20 LogFile3.txt\n    \u0080\n    Directory: C:\\Test\\Logs\n    \u0080\n    Mode                LastWriteTime         Length Name\n    ----                -------------         ------ ----\n    -a----        2/12/2019     16:16             20 Afile.txt\n    -a-h--        2/12/2019     15:52             22 hiddenfile.txt\n    -a----        2/13/2019     13:26             20 LogFile1.txt\n    \u0080\n    Directory: C:\\Test\n    \u0080\n    Mode                LastWriteTime         Length Name\n    ----                -------------         ------ ----\n    -a----        2/13/2019     08:55             26 anotherfile.txt\n    -a----        2/12/2019     15:40         118014 Command.txt\n    -a-h--        2/12/2019     15:52             22 hiddenfile.txt\n    -ar---        2/12/2019     14:31             27 ReadOnlyFile.txt\n    ```\n    \u0080\n    The `Get-ChildItem` cmdlet uses the **Path** parameter to specify `C:\\Test\\*.txt`. **Path** uses the\n    asterisk (`*`) wildcard to specify all files with the filename extension `.txt`. The **Recurse**\n    parameter searches the **Path** directory and its subdirectories, as shown in the **Directory:**\n    headings. The **Force** parameter displays hidden files such as `hiddenfile.txt` that have a mode of\n    **h**.\n    \n     --------- Example 4: Get child items using the Include parameter ---------\n    \n    In this example `Get-ChildItem` uses the **Include** parameter to find specific items from the\n    directory specified by the **Path** parameter.\n    \u0080\n    ```powershell\n    # When using the -Include parameter, if you don't include an asterisk in the path\n    # the command returns no output.\n    Get-ChildItem -Path C:\\Test\\ -Include *.txt\n    ```\n    \u0080\n    ```Output\n    \u0080\n    ```\n    \u0080\n    ```powershell\n    Get-ChildItem -Path C:\\Test\\* -Include *.txt\n    ```\n    \u0080\n    ```Output\n        Directory: C:\\Test\n    \u0080\n    Mode                LastWriteTime         Length Name\n    ----                -------------         ------ ----\n    -a----        2/13/2019     08:55             26 anotherfile.txt\n    -a----        2/12/2019     15:40         118014 Command.txt\n    -ar---        2/12/2019     14:31             27 ReadOnlyFile.txt\n    ```\n    \u0080\n    The `Get-ChildItem` cmdlet uses the **Path** parameter to specify the directory `C:\\Test`. The\n    **Path** parameter includes a trailing asterisk (`*`) wildcard to specify the directory's contents.\n    The **Include** parameter uses an asterisk (`*`) wildcard to specify all files with the file name\n    extension `.txt`.\n    \u0080\n    When the **Include** parameter is used, the **Path** parameter needs a trailing asterisk (`*`)\n    wildcard to specify the directory's contents. For example, `-Path C:\\Test\\*`.\n    \u0080\n    - If the **Recurse** parameter is added to the command, the trailing asterisk (`*`) in the **Path**\n      parameter is optional. The **Recurse** parameter gets items from the **Path** directory and its\n      subdirectories. For example, `-Path C:\\Test\\ -Recurse -Include *.txt`\n    - If a trailing asterisk (`*`) isn't included in the **Path** parameter, the command doesn't return\n      any output and returns to the PowerShell prompt. For example, `-Path C:\\Test\\`.\n    \n     --------- Example 5: Get child items using the Exclude parameter ---------\n    \n    The example's output shows the contents of the directory `C:\\Test\\Logs`. The output is a reference\n    for the other commands that use the **Exclude** and **Recurse** parameters.\n    \u0080\n    ```powershell\n    Get-ChildItem -Path C:\\Test\\Logs\n    ```\n    \u0080\n    ```Output\n        Directory: C:\\Test\\Logs\n    \u0080\n    Mode                LastWriteTime         Length Name\n    ----                -------------         ------ ----\n    d-----        2/15/2019     13:21                Adirectory\n    d-----        2/15/2019     08:28                AnEmptyDirectory\n    d-----        2/15/2019     13:21                Backup\n    -a----        2/12/2019     16:16             20 Afile.txt\n    -a----        2/13/2019     13:26             20 LogFile1.txt\n    -a----        2/12/2019     16:24             23 systemlog1.log\n    ```\n    \u0080\n    ```powershell\n    Get-ChildItem -Path C:\\Test\\Logs\\* -Exclude A*\n    ```\n    \u0080\n    ```Output\n        Directory: C:\\Test\\Logs\n    \u0080\n    Mode                LastWriteTime         Length Name\n    ----                -------------         ------ ----\n    d-----        2/15/2019     13:21                Backup\n    -a----        2/13/2019     13:26             20 LogFile1.txt\n    -a----        2/12/2019     16:24             23 systemlog1.log\n    ```\n    \u0080\n    The `Get-ChildItem` cmdlet uses the **Path** parameter to specify the directory `C:\\Test\\Logs`. The\n    **Exclude** parameter uses the asterisk (`*`) wildcard to specify any files or directories that\n    begin with `A` or `a` are excluded from the output.\n    \u0080\n    When the **Exclude** parameter is used, a trailing asterisk (`*`) in the **Path** parameter is\n    optional. For example, `-Path C:\\Test\\Logs` or `-Path C:\\Test\\Logs\\*`.\n    \u0080\n    - If a trailing asterisk (`*`) isn't included in the **Path** parameter, the contents of the\n      **Path** parameter are displayed. The exceptions are filenames or subdirectory names that match\n      the **Exclude** parameter's value.\n    - If a trailing asterisk (`*`) is included in the **Path** parameter, the command recurses into the\n      **Path** parameter's subdirectories. The exceptions are filenames or subdirectory names that match\n      the **Exclude** parameter's value.\n    - If the **Recurse** parameter is added to the command, the recursion output is the same whether or\n      not the **Path** parameter includes a trailing asterisk (`*`).\n    \n     --------- Example 6: Get the registry keys from a registry hive ---------\n    \n    This example gets all the registry keys from `HKEY_LOCAL_MACHINE\\HARDWARE`.\n    \u0080\n    `Get-ChildItem` uses the **Path** parameter to specify the registry key `HKLM:\\HARDWARE`. The hive's\n    path and top level of registry keys are displayed in the PowerShell console.\n    \u0080\n    For more information, see\n    [about_Registry_Provider](../Microsoft.PowerShell.Core/About/about_Registry_Provider.md).\n    \u0080\n    ```powershell\n    Get-ChildItem -Path HKLM:\\HARDWARE\n    ```\n    \u0080\n    ```Output\n        Hive: HKEY_LOCAL_MACHINE\\HARDWARE\n    \u0080\n    Name             Property\n    ----             --------\n    ACPI\n    DESCRIPTION\n    DEVICEMAP\n    RESOURCEMAP\n    UEFI\n    ```\n    \u0080\n    ```powershell\n    Get-ChildItem -Path HKLM:\\HARDWARE -Exclude D*\n    ```\n    \u0080\n    ```Output\n       Hive: HKEY_LOCAL_MACHINE\\HARDWARE\n    \u0080\n    Name                           Property\n    ----                           --------\n    ACPI\n    RESOURCEMAP\n    ```\n    \u0080\n    The first command shows the contents of the `HKLM:\\HARDWARE` registry key. The **Exclude** parameter\n    tells `Get-ChildItem` not to return any subkeys that start with `D*`. Currently, the **Exclude**\n    parameter only works on subkeys, not item properties.\n    \n     --------- Example 7: Get all certificates with code-signing authority ---------\n    \n    This example gets each certificate in the PowerShell `Cert:` drive that has code-signing authority.\n    \u0080\n    The `Get-ChildItem` cmdlet uses the **Path** parameter to specify the Certificate provider with the\n    `Cert:` drive. The **Recurse** parameter searches the directory specified by **Path** and its\n    subdirectories. The **CodeSigningCert** parameter gets only certificates that have code-signing\n    authority.\n    \u0080\n    ```powershell\n    Get-ChildItem -Path Cert:\\* -Recurse -CodeSigningCert\n    ```\n    \u0080\n    For more information about the Certificate provider and the `Cert:` drive, see\n    [about_Certificate_Provider](../Microsoft.PowerShell.Security/About/about_Certificate_Provider.md).\n    \n     --------- Example 8: Get items using the Depth parameter ---------\n    \n    This example displays the items in a directory and its subdirectories. The **Depth** parameter\n    determines the number of subdirectory levels to include in the recursion. Empty directories are\n    excluded from the output.\n    \u0080\n    ```powershell\n    Get-ChildItem -Path C:\\Parent -Depth 2\n    ```\n    \u0080\n    ```Output\n        Directory: C:\\Parent\n    \u0080\n    Mode                LastWriteTime         Length Name\n    ----                -------------         ------ ----\n    d-----        2/14/2019     10:24                SubDir_Level1\n    -a----        2/13/2019     08:55             26 file.txt\n    \u0080\n    Directory: C:\\Parent\\SubDir_Level1\n    \u0080\n    Mode                LastWriteTime         Length Name\n    ----                -------------         ------ ----\n    d-----        2/14/2019     10:24                SubDir_Level2\n    -a----        2/13/2019     08:55             26 file.txt\n    \u0080\n    Directory: C:\\Parent\\SubDir_Level1\\SubDir_Level2\n    \u0080\n    Mode                LastWriteTime         Length Name\n    ----                -------------         ------ ----\n    d-----        2/14/2019     10:22                SubDir_Level3\n    -a----        2/13/2019     08:55             26 file.txt\n    ```\n    \u0080\n    The `Get-ChildItem` cmdlet uses the **Path** parameter to specify `C:\\Parent`. The **Depth**\n    parameter specifies two levels of recursion. `Get-ChildItem` displays the contents of the directory\n    specified by the **Path** parameter and the two levels of subdirectories.\n    \n     --------- Example 9: Get the link target for a junction point ---------\n    \n    The `dir` command in the Windows Command Shell shows the target location of a filesystem junction\n    point. In PowerShell, this information is available from the **Target** property of the filesystem\n    object returned by `Get-ChildItem`.\n    \u0080\n    ```powershell\n    PS D:\\> New-Item -ItemType Junction -Name tmp -Target $Env:TEMP\n    PS D:\\> Get-ChildItem | Select-Object Name, *Target\n    \u0080\n    Name     Target\n    ----     ------\n    tmp      {C:\\Users\\user1\\AppData\\Local\\Temp}\n    ```\n    \n     --------- Example 10: Get the link target for an AppX reparse point ---------\n    \n    This example attempts to get the target information for an AppX reparse point. Microsoft Store\n    applications create AppX reparse points in the user's AppData directory.\n    \u0080\n    ```powershell\n    Get-ChildItem ~\\AppData\\Local\\Microsoft\\WindowsApps\\MicrosoftEdge.exe |\n        Select-Object Mode, LinkTarget, LinkType, Name\n    ```\n    \u0080\n    ```Output\n    Mode  LinkTarget LinkType Name\n    ----  ---------- -------- ----\n    la---                     MicrosoftEdge.exe\n    ```\n    \u0080\n    At this time, Windows doesn't provide a way to get the target information for an AppX reparse point.\n    The **LinkTarget** and **LinkType** properties of the filesystem object are empty.\n    \n     --------- Example 11: Use a filter to get only log files in a directory ---------\n    \n    ```powershell\n    # Returns only .log files in C:\\Test (filtering is performed by the FileSystem provider)\n    Get-ChildItem -Path C:\\Test -Filter '*.log'\n    \u0080\n    # Returns only .log files in C:\\Test (filtering is performed by Get-ChildItem after the\n    # FileSystem provider enumerates all files)\n    Get-ChildItem -Path C:\\Test -Include '*.log'\n    ```\n    \n \n\n\n"
+      "output": "\n"
     },
     {
       "demo": "help",
@@ -292,7 +292,7 @@
       "file": "pwsh.ps1",
       "code": "Get-ChildItem -Recurse -Filter *.md | Select-Object -ExpandProperty Name\ngci -r -fi *.md | Select-Object -ExpandProperty Name\n",
       "exit": 0,
-      "output": "b.md\nb.md\n"
+      "output": "\nb.md\nb.md\n"
     },
     {
       "demo": "ndjson",
@@ -308,7 +308,7 @@
       "file": "pwsh.ps1",
       "code": "Get-Content books.ndjson | ConvertFrom-Json | ForEach-Object body | Sort-Object price | Format-Table price, title\n",
       "exit": 0,
-      "output": "\nprice   title                                \n-----   -----                                \n\u00c2\u00a347.82 Sharp Objects                        \n\u00c2\u00a350.10 Soumission                           \n\u00c2\u00a351.77 A Light in the Attic                 \n\u00c2\u00a353.74 Tipping the Velvet                   \n\u00c2\u00a354.23 Sapiens: A Brief History of Humankind\n\n\n"
+      "output": "\nprice   title                                \n-----   -----                                \n\u00c2\u00a347.82 Sharp Objects                        \n\u00c2\u00a350.10 Soumission                           \n\u00c2\u00a351.77 A Light in the Attic                 \n\u00c2\u00a353.74 Tipping the Velvet                   \n\u00c2\u00a354.23 Sapiens: A Brief History of Humankind\n"
     },
     {
       "demo": "ndjson-51",
@@ -316,7 +316,7 @@
       "file": "powershell.ps1",
       "code": "Get-Content books.ndjson -Encoding UTF8 | ConvertFrom-Json | ForEach-Object body | Sort-Object price | Format-Table price, title\n",
       "exit": 0,
-      "output": "\nprice  title                                \n-----  -----                                \n\u00a347.82 Sharp Objects                        \n\u00a350.10 Soumission                           \n\u00a351.77 A Light in the Attic                 \n\u00a353.74 Tipping the Velvet                   \n\u00a354.23 Sapiens: A Brief History of Humankind\n\n\n"
+      "output": "\nprice  title                                \n-----  -----                                \n\u00a347.82 Sharp Objects                        \n\u00a350.10 Soumission                           \n\u00a351.77 A Light in the Attic                 \n\u00a353.74 Tipping the Velvet                   \n\u00a354.23 Sapiens: A Brief History of Humankind\n"
     },
     {
       "demo": "noclobber",
@@ -324,7 +324,7 @@
       "file": "pwsh.ps1",
       "code": "\"oops\" | Out-File notes.txt -NoClobber\nGet-Content notes.txt\n",
       "exit": 0,
-      "output": "Out-File: \nLine |\n   2 |  \"oops\" | Out-File notes.txt -NoClobber\n     |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n     | The file '~/practice\\notes.txt' already exists.\nhello\nworld\n"
+      "output": "Out-File: The file '~/practice\\notes.txt' already exists.\nhello\nworld\n"
     },
     {
       "demo": "noclobber",
@@ -332,7 +332,7 @@
       "file": "pwsh.ps1",
       "code": "\"oops\" | Out-File notes.txt -NoClobber\nGet-Content notes.txt\n",
       "exit": 0,
-      "output": "\nhello\nworld\nOut-File : The file '~/practice\\notes.txt' already \nexists.\nAt line:3 char:10\n+ \"oops\" | Out-File notes.txt -NoClobber\n+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : ResourceExists: (C:\\Users\\runner...sb5mk\\notes.txt:String) [Out-File], IOException\n    + FullyQualifiedErrorId : NoClobber,Microsoft.PowerShell.Commands.OutFileCommand\n \n"
+      "output": "\nhello\nworld\nOut-File : The file '~/practice\\notes.txt' already \nexists.\nAt line:1 char:10\n+ \"oops\" | Out-File notes.txt -NoClobber\n+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : ResourceExists: (C:\\Users\\runner...zs7hd\\notes.txt:String) [Out-File], IOException\n    + FullyQualifiedErrorId : NoClobber,Microsoft.PowerShell.Commands.OutFileCommand\n \n"
     },
     {
       "demo": "path",
@@ -372,7 +372,7 @@
       "file": "pwsh.ps1",
       "code": "Select-String -Path log.txt -Pattern ERROR | Measure-Object | Select-Object -ExpandProperty Count\n",
       "exit": 0,
-      "output": "2\n"
+      "output": "\n2\n"
     },
     {
       "demo": "pipe",
@@ -396,7 +396,7 @@
       "file": "pwsh.ps1",
       "code": "Get-ChildItem *.txt | Sort-Object Length -Descending | Select-Object -First 3 Name, Length\n",
       "exit": 0,
-      "output": "\nName      Length\n----      ------\nlog.txt      222\nnames.txt     33\nnotes.txt     12\n\n\n"
+      "output": "\nName      Length\n----      ------\nlog.txt      222\nnames.txt     33\nnotes.txt     12\n"
     },
     {
       "demo": "quote-json",
@@ -412,7 +412,7 @@
       "file": "pwsh.ps1",
       "code": "curl.exe -s https://httpbin.org/anything --json '{\"title\":\"h1\"}' | Select-String '\"data\"'\n",
       "exit": 0,
-      "output": "\n  \"data\": \"{title:h1}\", \n\n\n"
+      "output": "\n  \"data\": \"{title:h1}\", \n"
     },
     {
       "demo": "quote-json",
@@ -436,7 +436,7 @@
       "file": "pwsh.ps1",
       "code": "curl.exe -s \"https://httpbin.org/anything?q=cli&page=2\" | Select-String '\"page\"', '\"q\"'\n",
       "exit": 0,
-      "output": "\n    \"page\": \"2\", \n    \"q\": \"cli\"\n\n\n"
+      "output": "\n    \"page\": \"2\", \n    \"q\": \"cli\"\n"
     },
     {
       "demo": "quote-url",
@@ -476,7 +476,7 @@
       "file": "pwsh.ps1",
       "code": "Get-ChildItem notes.txt, missing.txt -Name > out.txt 2> errors.txt\nGet-Content out.txt\nGet-Content errors.txt\n\"first\" > report.txt\n\"second\" >> report.txt\nGet-Content report.txt\n",
       "exit": 0,
-      "output": "notes.txt\nGet-ChildItem: \nLine |\n   2 |  Get-ChildItem notes.txt, missing.txt -Name > out.txt 2> errors.txt\n     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n     | Cannot find path '~/practice\\missing.txt' because it does not exist.\nfirst\nsecond\n"
+      "output": "notes.txt\nGet-ChildItem: Cannot find path '~/practice\\missing.txt' because it does not exist.\nfirst\nsecond\n"
     },
     {
       "demo": "redirect",
@@ -484,7 +484,7 @@
       "file": "pwsh.ps1",
       "code": "Get-ChildItem notes.txt, missing.txt -Name > out.txt 2> errors.txt\nGet-Content out.txt\nGet-Content errors.txt\n\"first\" > report.txt\n\"second\" >> report.txt\nGet-Content report.txt\n",
       "exit": 0,
-      "output": "notes.txt\nGet-ChildItem : Cannot find path \n'~/practice\\missing.txt' because it does not exist.\nAt line:3 char:1\n+ Get-ChildItem notes.txt, missing.txt -Name > out.txt 2> errors.txt\n+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : ObjectNotFound: (C:\\Users\\runner...be_\\missing.txt:String) [Get-ChildItem], ItemNotFound \n   Exception\n    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand\n \nfirst\nsecond\n"
+      "output": "\nnotes.txt\nGet-ChildItem : Cannot find path \n'~/practice\\missing.txt' because it does not exist.\nAt line:1 char:1\n+ Get-ChildItem notes.txt, missing.txt -Name > out.txt 2> errors.txt\n+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : ObjectNotFound: (C:\\Users\\runner...ibx\\missing.txt:String) [Get-ChildItem], ItemNotFound \n   Exception\n    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand\n \nfirst\nsecond\n"
     },
     {
       "demo": "redirect",
@@ -508,13 +508,13 @@
       "file": "pwsh.ps1",
       "code": "\"hi\" > hi.txt\n[System.IO.File]::ReadAllBytes(\"$PWD\\hi.txt\") -join ' '\n",
       "exit": 0,
-      "output": "255 254 104 0 105 0 13 0 10 0\n"
+      "output": "\n255 254 104 0 105 0 13 0 10 0\n"
     },
     {
       "demo": "register-task",
       "shell": "pwsh",
       "file": "pwsh.ps1",
-      "code": "$action  = New-ScheduledTaskAction -Execute \"pwsh.exe\" -Argument \"-File $PWD\\hello.ps1\"\n$trigger = New-ScheduledTaskTrigger -Daily -At 8am\nRegister-ScheduledTask -TaskName \"HelloScript\" -Action $action -Trigger $trigger | Select-Object TaskName, State\nUnregister-ScheduledTask -TaskName \"HelloScript\" -Confirm:$false\n",
+      "code": "$action  = New-ScheduledTaskAction -Execute \"pwsh.exe\" -Argument \"-File `\"$PWD\\hello.ps1`\"\"\n$trigger = New-ScheduledTaskTrigger -Daily -At 8am\nRegister-ScheduledTask -TaskName \"HelloScript\" -Action $action -Trigger $trigger | Select-Object TaskName, State\nUnregister-ScheduledTask -TaskName \"HelloScript\" -Confirm:$false\n",
       "exit": 0,
       "output": "\nTaskName    State\n--------    -----\nHelloScript Ready\n\n"
     },
@@ -522,7 +522,7 @@
       "demo": "schtasks",
       "shell": "cmd",
       "file": "cmd.cmd",
-      "code": "schtasks /create /tn \"HelloScript\" /tr \"%CD%\\hello.cmd\" /sc daily /st 08:00 /f\nschtasks /query /tn \"HelloScript\"\nschtasks /delete /tn \"HelloScript\" /f\n",
+      "code": "schtasks /create /tn \"HelloScript\" /tr \"\\\"%CD%\\hello.cmd\\\"\" /sc daily /st 08:00 /f\nschtasks /query /tn \"HelloScript\"\nschtasks /delete /tn \"HelloScript\" /f\n",
       "exit": 0,
       "output": "SUCCESS: The scheduled task \"HelloScript\" has successfully been created.\n\nFolder: \\\nTaskName                                 Next Run Time          Status         \n======================================== ====================== ===============\nHelloScript                              10/11/2026 8:00:00 AM  Ready          \nSUCCESS: The scheduled task \"HelloScript\" was successfully deleted.\n"
     },
@@ -532,7 +532,7 @@
       "file": "pwsh.ps1",
       "code": "hello.ps1\n.\\hello.ps1\n",
       "exit": 0,
-      "output": "hello.ps1: \nLine |\n   2 |  hello.ps1\n     |  ~~~~~~~~~\n     | The term 'hello.ps1' is not recognized as a name of a cmdlet, function, script file, or executable program.\nCheck the spelling of the name, or if a path was included, verify that the path is correct and try again.\nHello from PowerShell\n"
+      "output": "hello.ps1: The term 'hello.ps1' is not recognized as a name of a cmdlet, function, script file, or executable program.\nCheck the spelling of the name, or if a path was included, verify that the path is correct and try again.\nHello from PowerShell\n"
     },
     {
       "demo": "script-pwsh",
@@ -540,7 +540,7 @@
       "file": "pwsh.ps1",
       "code": "hello.ps1\n.\\hello.ps1\n",
       "exit": 0,
-      "output": "\nHello from PowerShell\nhello.ps1 : The term 'hello.ps1' is not recognized as the name of a cmdlet, function, script file, or operable \nprogram. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.\nAt line:3 char:1\n+ hello.ps1\n+ ~~~~~~~~~\n    + CategoryInfo          : ObjectNotFound: (hello.ps1:String) [], CommandNotFoundException\n    + FullyQualifiedErrorId : CommandNotFoundException\n \n"
+      "output": "\nHello from PowerShell\nhello.ps1 : The term 'hello.ps1' is not recognized as the name of a cmdlet, function, script file, or operable \nprogram. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.\nAt line:1 char:1\n+ hello.ps1\n+ ~~~~~~~~~\n    + CategoryInfo          : ObjectNotFound: (hello.ps1:String) [], CommandNotFoundException\n    + FullyQualifiedErrorId : CommandNotFoundException\n \n"
     },
     {
       "demo": "script-pwsh",
@@ -588,7 +588,7 @@
       "file": "pwsh.ps1",
       "code": "Remove-Item folder -Recurse -WhatIf\n",
       "exit": 0,
-      "output": "What if: Performing the operation \"Remove Directory\" on target \"~/practice\\folder\".\n"
+      "output": "\nWhat if: Performing the operation \"Remove Directory\" on target \"~/practice\\folder\".\n"
     },
     {
       "demo": "which",
@@ -604,7 +604,7 @@
       "file": "pwsh.ps1",
       "code": "Get-Command curl | Format-Table CommandType, Name, Definition -AutoSize\n",
       "exit": 0,
-      "output": "\nCommandType Name Definition       \n----------- ---- ----------       \n      Alias curl Invoke-WebRequest\n\n\n"
+      "output": "\nCommandType Name Definition       \n----------- ---- ----------       \n      Alias curl Invoke-WebRequest\n"
     },
     {
       "demo": "which",
@@ -628,7 +628,7 @@
       "file": "pwsh.ps1",
       "code": "echo *.txt\nGet-ChildItem *.txt -Name\n",
       "exit": 0,
-      "output": "*.txt\nfile.txt\nlog.txt\nnames.txt\nnotes.txt\nold.txt\n"
+      "output": "\n*.txt\nfile.txt\nlog.txt\nnames.txt\nnotes.txt\nold.txt\n"
     },
     {
       "demo": "wildcards",

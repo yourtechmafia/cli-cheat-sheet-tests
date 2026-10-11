@@ -28,7 +28,7 @@ Output:
 Follow-up in a new interactive shell: `ll notes.txt` (exit 0)
 
 ```
--rw-r--r--  1 runner  staff  12 Oct 11 11:56 notes.txt
+-rw-r--r--  1 runner  staff  12 Oct 11 12:17 notes.txt
 ```
 
 ## alias / bash (exit 0)
@@ -46,7 +46,7 @@ Follow-up in a new interactive shell: `ll notes.txt` (exit 0)
 
 ```
 bash: no job control in this shell
--rw-r--r--  1 runner  staff  12 Oct 11 11:56 notes.txt
+-rw-r--r--  1 runner  staff  12 Oct 11 12:17 notes.txt
 ```
 
 ## anatomy / zsh (exit 0)
@@ -62,7 +62,7 @@ git commit -m "Fix typo"
 Output:
 
 ```
-[main (root-commit) 9637d00] Fix typo
+[main (root-commit) 62b4893] Fix typo
  1 file changed, 1 insertion(+)
  create mode 100644 README.md
 ```
@@ -80,7 +80,7 @@ git commit -m "Fix typo"
 Output:
 
 ```
-[main (root-commit) 9637d00] Fix typo
+[main (root-commit) 62b4893] Fix typo
  1 file changed, 1 insertion(+)
  create mode 100644 README.md
 ```
@@ -124,8 +124,8 @@ curl -s https://api.github.com/repos/curl/curl/releases/latest | jq -r '.tag_nam
 Output:
 
 ```
-null
-null
+curl-8_22_0
+2026-09-02T05:59:35Z
 ```
 
 ## api-json / bash (exit 0)
@@ -137,8 +137,8 @@ curl -s https://api.github.com/repos/curl/curl/releases/latest | jq -r '.tag_nam
 Output:
 
 ```
-null
-null
+curl-8_22_0
+2026-09-02T05:59:35Z
 ```
 
 ## double-dash / zsh (exit 0)
@@ -544,9 +544,9 @@ ls -lS *.txt | head -n 3
 Output:
 
 ```
--rw-r--r--  1 runner  staff  222 Oct 11 11:56 log.txt
--rw-r--r--  1 runner  staff   33 Oct 11 11:56 names.txt
--rw-r--r--  1 runner  staff   12 Oct 11 11:56 notes.txt
+-rw-r--r--  1 runner  staff  222 Oct 11 12:17 log.txt
+-rw-r--r--  1 runner  staff   33 Oct 11 12:17 names.txt
+-rw-r--r--  1 runner  staff   12 Oct 11 12:17 notes.txt
 ```
 
 ## pipe-objects / bash (exit 0)
@@ -558,9 +558,9 @@ ls -lS *.txt | head -n 3
 Output:
 
 ```
--rw-r--r--  1 runner  staff  222 Oct 11 11:56 log.txt
--rw-r--r--  1 runner  staff   33 Oct 11 11:56 names.txt
--rw-r--r--  1 runner  staff   12 Oct 11 11:56 notes.txt
+-rw-r--r--  1 runner  staff  222 Oct 11 12:17 log.txt
+-rw-r--r--  1 runner  staff   33 Oct 11 12:17 names.txt
+-rw-r--r--  1 runner  staff   12 Oct 11 12:17 notes.txt
 ```
 
 ## quote-json / zsh (exit 0)

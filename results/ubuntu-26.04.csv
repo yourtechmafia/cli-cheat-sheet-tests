@@ -24,9 +24,9 @@ tail -n 3 log.txt"
 echo $?"
 20,Run B only if A succeeds,bash,works,0,mkdir out && echo created
 21,Read an environment variable,bash,works,0,echo $HOME
-22,Set an environment variable for this session,bash,works,0,"export API_KEY=abc123
-echo $API_KEY"
-23,Set an environment variable permanently,bash,works,0,echo 'export API_KEY=abc123' >> ~/.bashrc
+22,Set an environment variable for this session,bash,works,0,"export GREETING=hello
+echo $GREETING"
+23,Set an environment variable permanently,bash,works,0,echo 'export GREETING=hello' >> ~/.bashrc
 24,Show PATH,bash,works,0,echo $PATH
 25,Find which program a command runs,bash,works,0,command -v curl
 26,Get help for a command,bash,works,0,ls --help
