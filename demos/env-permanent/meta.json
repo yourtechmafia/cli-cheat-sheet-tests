@@ -1,0 +1,5 @@
+{
+  "cleanup_user_env": [
+    "GREETING"
+  ]
+}

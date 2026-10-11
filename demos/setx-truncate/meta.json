@@ -1,0 +1,8 @@
+{
+  "os": [
+    "windows"
+  ],
+  "cleanup_user_env": [
+    "LONGVAR"
+  ]
+}

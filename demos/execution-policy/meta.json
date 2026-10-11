@@ -1,0 +1,9 @@
+{
+  "os": [
+    "windows"
+  ],
+  "pwsh_args": [
+    "-ExecutionPolicy",
+    "Restricted"
+  ]
+}

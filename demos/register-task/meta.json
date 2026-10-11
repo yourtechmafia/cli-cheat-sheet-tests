@@ -1,0 +1,8 @@
+{
+  "os": [
+    "windows"
+  ],
+  "only": [
+    "pwsh"
+  ]
+}

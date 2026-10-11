@@ -1,0 +1,12 @@
+{
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "env": {
+    "GIT_AUTHOR_NAME": "Demo",
+    "GIT_AUTHOR_EMAIL": "demo@example.com",
+    "GIT_COMMITTER_NAME": "Demo",
+    "GIT_COMMITTER_EMAIL": "demo@example.com"
+  }
+}

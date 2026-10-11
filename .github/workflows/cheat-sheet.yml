@@ -42,6 +42,8 @@ jobs:
         run: python harness.py --label ${{ matrix.label }}
       - name: Bash commands typed verbatim (portability)
         run: python harness.py --portability --label ${{ matrix.label }}
+      - name: Article examples
+        run: python demos.py --label ${{ matrix.label }}
       - uses: actions/upload-artifact@v7
         with:
           name: results-${{ matrix.label }}
@@ -59,6 +61,8 @@ jobs:
           curl --version | head -1
       - name: Native commands
         run: python3 harness.py --label macos-ci
+      - name: Article examples
+        run: python3 demos.py --label macos-ci
       - uses: actions/upload-artifact@v7
         with:
           name: results-macos-ci
@@ -71,7 +75,7 @@ jobs:
       - name: Install the tools a desktop Ubuntu ships with
         run: |
           apt-get update -qq
-          DEBIAN_FRONTEND=noninteractive apt-get install -y -qq python3 curl git procps ca-certificates
+          DEBIAN_FRONTEND=noninteractive apt-get install -y -qq python3 curl git procps ca-certificates cron
       - uses: actions/checkout@v7
       - name: Record the Ubuntu environment
         run: |
@@ -80,6 +84,12 @@ jobs:
           curl --version | head -1
       - name: Native commands
         run: python3 harness.py --label ubuntu-26.04
+      - name: Article examples
+        run: python3 demos.py --label ubuntu-26.04
+      - name: Schedule a script with cron and watch it fire
+        run: |
+          cron
+          bash scheduling/cron-test.sh | tee results/cron-ubuntu-26.04.txt
       - uses: actions/upload-artifact@v7
         with:
           name: results-ubuntu-26.04
