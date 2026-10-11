@@ -37,11 +37,9 @@ def shells():
     """Return the shells to test on this machine, as (name, family, argv-builder)."""
     found = []
     if IS_WINDOWS:
-        if shutil.which("pwsh"):
-            found.append(("pwsh", "pwsh"))
-        if shutil.which("powershell"):
-            found.append(("powershell", "pwsh51"))
-        found.append(("cmd", "cmd"))
+        for name, family in (("pwsh", "pwsh"), ("powershell", "pwsh51"), ("cmd", "cmd")):
+            if shutil.which(name):
+                found.append((name, family))
     else:
         for name in ("zsh", "bash"):
             if shutil.which(name):
@@ -76,8 +74,8 @@ def machine_info():
     if os.path.exists("/etc/os-release"):
         with open("/etc/os-release") as f:
             info["os_release"] = dict(l.strip().split("=", 1) for l in f if "=" in l).get("PRETTY_NAME", "").strip('"')
-    for tool in ("curl", "git"):
-        exe = shutil.which(tool)
+    for tool in ("curl",):
+        exe = shutil.which(tool, path=stock_path())
         if exe:
             info[tool] = run([exe, "--version"])[1].splitlines()[0].strip()
     return info
@@ -95,18 +93,19 @@ def make_practice(root):
 
 
 def build_argv(shell, family, text, scripts_dir):
+    exe = shutil.which(shell)  # full path, resolved before the stock PATH applies
     if family == "posix":
         script = os.path.join(scripts_dir, "run.sh")
         with open(script, "w", encoding="utf-8", newline="\n") as f:
             f.write(text + "\n")
-        return [shell, script]
+        return [exe, script]
     if family in ("pwsh", "pwsh51"):
         encoded = base64.b64encode(text.encode("utf-16-le")).decode("ascii")
-        return [shell, "-NoProfile", "-NonInteractive", "-EncodedCommand", encoded]
+        return [exe, "-NoProfile", "-NonInteractive", "-EncodedCommand", encoded]
     script = os.path.join(scripts_dir, "run.cmd")
     with open(script, "w", encoding="ascii", newline="\r\n") as f:
         f.write("@echo off\n" + text + "\n")
-    return ["cmd", "/d", "/c", script]
+    return [exe, "/d", "/c", script]
 
 
 def kill_tree(proc):
@@ -121,10 +120,28 @@ def kill_tree(proc):
             pass
 
 
+def stock_path():
+    """The PATH a fresh install of each OS gives you, so tools that CI images add
+    (Git for Windows' Unix utilities, Homebrew) can't make a command look portable."""
+    if IS_WINDOWS:
+        sr = os.environ.get("SystemRoot", r"C:\Windows")
+        dirs = [sr + r"\system32", sr, sr + r"\System32\Wbem", sr + r"\System32\WindowsPowerShell\v1.0",
+                sr + r"\System32\OpenSSH"]
+        pwsh = shutil.which("pwsh")
+        if pwsh:
+            dirs.append(os.path.dirname(pwsh))  # where the PowerShell 7 installer puts it
+        dirs.append(os.path.join(os.environ.get("USERPROFILE", ""), r"AppData\Local\Microsoft\WindowsApps"))
+        return ";".join(dirs)
+    if sys.platform == "darwin":
+        return "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"  # /etc/paths on a new Mac
+    return "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"  # Ubuntu default
+
+
 def run_task(task, shell, family, root, portability):
     cwd = make_practice(root)
     scripts_dir = tempfile.mkdtemp(prefix="scripts-", dir=root)
     env = dict(os.environ)
+    env["PATH"] = stock_path()
     env.setdefault("TERM", "xterm-256color")  # what a terminal emulator would set
     if IS_WINDOWS:
         home = env.get("USERPROFILE", os.path.expanduser("~"))
@@ -178,7 +195,7 @@ def run_task(task, shell, family, root, portability):
             run(["powershell", "-NoProfile", "-Command",
                  "[Environment]::SetEnvironmentVariable('API_KEY',$null,'User')"])
         else:
-            ctx["persist_out"] = run([shell, "-i", "-c", "echo $API_KEY"], env=env)[1]
+            ctx["persist_out"] = run([shutil.which(shell), "-i", "-c", "echo $API_KEY"], env=env)[1]
 
     if sleeper is not None:
         for _ in range(30):

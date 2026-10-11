@@ -196,13 +196,14 @@ TASKS = [
     },
     {
         "id": 25, "task": "Find which program a command runs",
-        "posix": "command -v git", "pwsh": "Get-Command git", "cmd": "where git",
-        "check": lambda c: "git" in _out(c).lower(),
+        "posix": "command -v curl", "pwsh": "Get-Command curl", "cmd": "where curl",
+        "check": lambda c: "curl" in _out(c).lower(),
     },
     {
         "id": 26, "task": "Get help for a command",
         "posix": "ls --help", "pwsh": "Get-Help Get-ChildItem", "cmd": "dir /?",
-        "check": lambda c: c["exit"] == 0 and len(_out(c).strip()) > 50,
+        # Help text counts even with a non-zero exit: Command Prompt's /? exits with 1
+        "check": lambda c: len(_out(c).strip()) > 50,
     },
     {
         "id": 27, "task": "Search command history",
