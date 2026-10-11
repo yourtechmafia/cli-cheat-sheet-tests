@@ -43,6 +43,12 @@ D["alias"] = {
     "meta.json": {"followup": "ll notes.txt"},
 }
 
+D["bash-in-powershell"] = {
+    "pwsh.ps1": ("ls -la\nsort -u names.txt\ngrep zzz log.txt\necho $?\necho $PATH\n"
+                 "find . -name \"*.txt\"\ncp -r docs docs-backup\nTest-Path docs-backup\\deep\\c.txt\n"),
+    "meta.json": {"os": ["windows"]},
+}
+
 # --- Pipes, redirection, exit codes --------------------------------------------
 D["pipe"] = {
     "posix.sh": "grep ERROR log.txt | wc -l\n",
