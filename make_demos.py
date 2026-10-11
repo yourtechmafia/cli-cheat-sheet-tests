@@ -103,6 +103,9 @@ D["env-session"] = {
     "pwsh.ps1": "$env:GREETING = \"hello\"\n$env:GREETING\n",
     "cmd.cmd": "set GREETING=hello\necho %GREETING%\n",
 }
+D["set-spaces"] = {
+    "cmd.cmd": "set GREETING = hello\necho [%GREETING%]\necho [%GREETING %]\n",
+}
 D["env-permanent"] = {
     "zsh.sh": "echo 'export GREETING=\"hello\"' >> ~/.zshrc\nsource ~/.zshrc\necho $GREETING\n",
     "bash.sh": "echo 'export GREETING=\"hello\"' >> ~/.bashrc\nsource ~/.bashrc\necho $GREETING\n",

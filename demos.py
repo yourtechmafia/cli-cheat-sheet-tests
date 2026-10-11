@@ -66,7 +66,21 @@ def argv_for(shell, family, path, text, extra):
     return [exe, "/d", "/c", path], subprocess.DEVNULL
 
 
+def decode_clixml(text):
+    """Windows PowerShell 5.1 serialises the error stream as CLIXML when it is redirected.
+    Turn it back into the plain text the console would print, after the regular output."""
+    import html
+    if "#< CLIXML" not in text:
+        return text
+    plain, _, xml = text.partition("#< CLIXML")
+    errors = "".join(re.findall(r'<S S="Error">(.*?)</S>', xml, flags=re.S))
+    errors = re.sub(r"_x([0-9A-Fa-f]{4})_", lambda m: chr(int(m.group(1), 16)), html.unescape(errors))
+    rest = re.sub(r"<Objs.*?</Objs>", "", xml, flags=re.S)
+    return plain.rstrip("\r\n") + "\n" + rest.strip("\r\n") + ("\n" if rest.strip() else "") + errors
+
+
 def clean(text, cwd, home):
+    text = decode_clixml(text)
     text = ANSI.sub("", text).replace("\r\n", "\n")
     text = TRACE.sub("Root=1-xxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx", IPV4.sub("203.0.113.7", text))  # no real IPs in results
     for real, shown in ((cwd, "~/practice"), (home, "~")):
@@ -97,6 +111,9 @@ def run_demo(name, root):
         env["PATH"] = stock_path()
         env.setdefault("TERM", "xterm-256color")
         env.update(meta.get("env", {}))
+        # A console starts with the system module path; the CI step's PowerShell 7 path would make
+        # Windows PowerShell 5.1 load 7.x modules and fail, which no real terminal does.
+        env.pop("PSModulePath", None)
         if IS_WINDOWS:
             home = env.get("USERPROFILE", "")
         else:
