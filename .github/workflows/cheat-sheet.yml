@@ -44,6 +44,11 @@ jobs:
         run: python harness.py --portability --label ${{ matrix.label }}
       - name: Article examples
         run: python demos.py --label ${{ matrix.label }}
+      - name: Allow your own scripts with RemoteSigned for the current user (Windows PowerShell 5.1)
+        shell: powershell
+        run: |
+          Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+          Get-ExecutionPolicy -List | Out-String | Tee-Object -FilePath results/execution-policy-${{ matrix.label }}.txt
       - uses: actions/upload-artifact@v7
         with:
           name: results-${{ matrix.label }}
