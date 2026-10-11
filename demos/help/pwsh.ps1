@@ -1,1 +1,2 @@
-Get-Help Get-ChildItem -Examples | Out-String | Select-Object -First 1
+Update-Help -Module Microsoft.PowerShell.Management -Scope CurrentUser
+Get-Help Get-ChildItem -Examples

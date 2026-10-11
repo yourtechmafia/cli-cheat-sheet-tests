@@ -20,7 +20,7 @@ D["anatomy"] = {
 }
 D["double-dash"] = {
     "posix.sh": "touch -- -oops.txt\nls -oops.txt\nls -- -oops.txt\nrm -- -oops.txt\n",
-    "pwsh.ps1": "New-Item -ItemType File -Path -oops.txt | Out-Null\nGet-ChildItem -oops.txt\nGet-ChildItem -LiteralPath -oops.txt | Select-Object -ExpandProperty Name\nRemove-Item -LiteralPath -oops.txt\n",
+    "pwsh.ps1": "New-Item -ItemType File \"-oops.txt\" | Out-Null\nGet-ChildItem -oops.txt\nGet-ChildItem \"-oops.txt\" -Name\nRemove-Item \"-oops.txt\"\n",
     "cmd.cmd": "type nul > -oops.txt\ndir /b -oops.txt\ndel -oops.txt\n",
 }
 D["long-options"] = {
@@ -30,8 +30,10 @@ D["long-options"] = {
 D["help"] = {
     "posix.linux.sh": "ls --help | head -n 4\n",
     "posix.darwin.sh": "man ls | col -b | head -n 6\n",
-    "pwsh.ps1": "Get-Help Get-ChildItem -Examples | Out-String | Select-Object -First 1\n",
+    "pwsh.ps1": "Update-Help -Module Microsoft.PowerShell.Management -Scope CurrentUser\nGet-Help Get-ChildItem -Examples\n",
+    "powershell.ps1": "Update-Help -Module Microsoft.PowerShell.Management\nGet-Help Get-ChildItem -Examples\n",
     "cmd.cmd": "dir /? | find \"Displays\"\necho Exit code: %ERRORLEVEL%\n",
+    "meta.json": {"network": True, "timeout": 180},
 }
 D["alias"] = {
     "zsh.sh": "echo \"alias ll='ls -la'\" >> ~/.zshrc\n",
@@ -114,6 +116,13 @@ D["setx-truncate"] = {
     "pwsh.ps1": "setx LONGVAR (\"x\" * 1100)\n",
     "meta.json": {"os": ["windows"], "cleanup_user_env": ["LONGVAR"]},
 }
+D["homebrew-path"] = {
+    "zsh.darwin.sh": ("brew --version\n"
+                      "echo 'eval \"$(/opt/homebrew/bin/brew shellenv zsh)\"' >> ~/.zprofile\n"
+                      "eval \"$(/opt/homebrew/bin/brew shellenv zsh)\"\n"
+                      "brew --version\n"),
+    "meta.json": {"os": ["darwin"]},
+}
 D["which"] = {
     "posix.sh": "command -v curl\n",
     "pwsh.ps1": "Get-Command curl | Format-Table CommandType, Name, Definition -AutoSize\n",
@@ -178,6 +187,22 @@ D["register-task"] = {
                  "Register-ScheduledTask -TaskName \"HelloScript\" -Action $action -Trigger $trigger | Select-Object TaskName, State\n"
                  "Unregister-ScheduledTask -TaskName \"HelloScript\" -Confirm:$false\n"),
     "meta.json": {"os": ["windows"], "only": ["pwsh"]},
+}
+
+# --- Web data ---------------------------------------------------------------------------
+D["api-json"] = {
+    "posix.sh": "curl -s https://api.github.com/repos/curl/curl/releases/latest | jq -r '.tag_name, .published_at'\n",
+    "pwsh.ps1": "Invoke-RestMethod https://api.github.com/repos/curl/curl/releases/latest | Select-Object tag_name, published_at\n",
+    "meta.json": {"network": True},
+}
+D["ndjson"] = {
+    "posix.sh": "jq -r '[.body.price, .body.title] | @tsv' books.ndjson | sort\n",
+    "pwsh.ps1": "Get-Content books.ndjson | ConvertFrom-Json | ForEach-Object body | Sort-Object price | Format-Table price, title\n",
+    "meta.json": {"extra_files": ["books.ndjson"]},
+}
+D["ndjson-51"] = {
+    "powershell.ps1": "Get-Content books.ndjson -Encoding UTF8 | ConvertFrom-Json | ForEach-Object body | Sort-Object price | Format-Table price, title\n",
+    "meta.json": {"os": ["windows"], "extra_files": ["books.ndjson"]},
 }
 
 # --- Safety ------------------------------------------------------------------------------

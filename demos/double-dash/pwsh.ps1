@@ -1,4 +1,4 @@
-New-Item -ItemType File -Path -oops.txt | Out-Null
+New-Item -ItemType File "-oops.txt" | Out-Null
 Get-ChildItem -oops.txt
-Get-ChildItem -LiteralPath -oops.txt | Select-Object -ExpandProperty Name
-Remove-Item -LiteralPath -oops.txt
+Get-ChildItem "-oops.txt" -Name
+Remove-Item "-oops.txt"

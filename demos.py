@@ -32,8 +32,11 @@ OS_NAME = "windows" if IS_WINDOWS else ("darwin" if sys.platform == "darwin" els
 ANSI = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
 IPV4 = re.compile(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b")
 TRACE = re.compile(r"Root=1-[0-9a-f]+-[0-9a-f]+")
-# Windows PowerShell 5.1 shows this progress record on first use; it is not part of any example
-PS51_SETUP = "$ProgressPreference = 'SilentlyContinue'\n"
+# Not part of any example. A console window draws Unicode directly; a redirected PowerShell
+# writes in the OEM code page unless told otherwise, so we ask for UTF-8 to capture what the
+# screen would show. Windows PowerShell 5.1 also prints a progress record on first use.
+PS_SETUP = "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8\n"
+PS51_SETUP = PS_SETUP + "$ProgressPreference = 'SilentlyContinue'\n"
 
 
 def pick_file(folder, shell, family):
@@ -57,9 +60,9 @@ def argv_for(shell, family, path, text, extra):
     if family == "posix":
         return [shell, "-s"], open(path, "rb")  # script on stdin: errors read "bash: line 3: ..." not a temp path
     if family in ("pwsh", "pwsh51"):
-        body = (PS51_SETUP if family == "pwsh51" else "") + text
+        body = (PS51_SETUP if family == "pwsh51" else PS_SETUP) + text
         enc = base64.b64encode(body.encode("utf-16-le")).decode("ascii")
-        return [exe, *extra, "-NoProfile", "-NonInteractive", "-EncodedCommand", enc], subprocess.DEVNULL
+        return [exe, *extra, "-NoProfile", "-NonInteractive", "-OutputFormat", "Text", "-EncodedCommand", enc], subprocess.DEVNULL
     return [exe, "/d", "/c", path], subprocess.DEVNULL
 
 
@@ -88,6 +91,8 @@ def run_demo(name, root):
         if not fname:
             continue
         cwd = make_practice(root)
+        for extra in meta.get("extra_files", []):
+            shutil.copy(os.path.join(folder, extra), os.path.join(cwd, extra))
         env = dict(os.environ)
         env["PATH"] = stock_path()
         env.setdefault("TERM", "xterm-256color")
