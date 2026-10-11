@@ -1,0 +1,86 @@
+name: cheat-sheet
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  windows:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: windows-11-arm
+            label: windows-11-arm64
+            pwsh_zip: PowerShell-7.6.6-win-arm64.zip
+          - runner: windows-2025
+            label: windows-server-2025-x64
+            pwsh_zip: PowerShell-7.6.6-win-x64.zip
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.15"
+      - name: Install PowerShell 7.6.6 (current LTS) ahead of the preinstalled one
+        shell: powershell
+        run: |
+          $url = "https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/${{ matrix.pwsh_zip }}"
+          Invoke-WebRequest $url -OutFile pwsh.zip
+          Expand-Archive pwsh.zip -DestinationPath C:\pwsh76
+          "C:\pwsh76" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+      - name: Record the Windows environment
+        shell: cmd
+        run: |
+          ver
+          pwsh -NoProfile -Command "$PSVersionTable"
+          powershell -NoProfile -Command "$PSVersionTable; Get-ExecutionPolicy -List"
+          where curl
+          curl --version
+      - name: Native commands
+        run: python harness.py --label ${{ matrix.label }}
+      - name: Bash commands typed verbatim (portability)
+        run: python harness.py --portability --label ${{ matrix.label }}
+      - uses: actions/upload-artifact@v7
+        with:
+          name: results-${{ matrix.label }}
+          path: results/
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Record the macOS environment
+        run: |
+          sw_vers
+          zsh --version
+          bash --version | head -1
+          curl --version | head -1
+      - name: Native commands
+        run: python3 harness.py --label macos-ci
+      - uses: actions/upload-artifact@v7
+        with:
+          name: results-macos-ci
+          path: results/
+
+  ubuntu:
+    runs-on: ubuntu-latest
+    container: ubuntu:26.04
+    steps:
+      - name: Install the tools a desktop Ubuntu ships with
+        run: |
+          apt-get update -qq
+          DEBIAN_FRONTEND=noninteractive apt-get install -y -qq python3 curl git procps ca-certificates
+      - uses: actions/checkout@v7
+      - name: Record the Ubuntu environment
+        run: |
+          head -2 /etc/os-release
+          bash --version | head -1
+          curl --version | head -1
+      - name: Native commands
+        run: python3 harness.py --label ubuntu-26.04
+      - uses: actions/upload-artifact@v7
+        with:
+          name: results-ubuntu-26.04
+          path: results/
