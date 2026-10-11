@@ -81,6 +81,8 @@ jobs:
         run: |
           head -2 /etc/os-release
           bash --version | head -1
+          ls --version | head -1
+          dpkg -S "$(readlink -f "$(command -v ls)")"
           curl --version | head -1
       - name: Native commands
         run: python3 harness.py --label ubuntu-26.04

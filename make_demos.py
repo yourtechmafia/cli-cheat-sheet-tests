@@ -157,6 +157,11 @@ D["quote-json"] = {
                 "curl -s https://httpbin.org/anything --json \"{\\\"title\\\":\\\"h1\\\"}\" | findstr /c:\"data\"\n"),
     "meta.json": {"network": True},
 }
+D["escape"] = {
+    "posix.sh": "echo \"Price: \\$5 and a \\\"quote\\\"\"\n",
+    "pwsh.ps1": "\"Price: `$5 and a `\"quote`\"\"\n",
+    "cmd.cmd": "echo Price: $5 and a ^<tag^>\n",
+}
 D["wildcards"] = {
     "posix.sh": "echo *.txt\necho \"*.txt\"\necho *.zzz\n",
     "pwsh.ps1": "echo *.txt\nGet-ChildItem *.txt -Name\n",
@@ -175,6 +180,12 @@ D["script-pwsh"] = {
 D["execution-policy"] = {
     "powershell.ps1": ".\\hello.ps1\n",
     "meta.json": {"os": ["windows"], "pwsh_args": ["-ExecutionPolicy", "Restricted"]},
+}
+D["execution-policy-fix"] = {
+    "powershell.ps1": ("Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force\n"
+                       "Get-ExecutionPolicy -Scope CurrentUser\n"
+                       "Set-ExecutionPolicy -ExecutionPolicy Undefined -Scope CurrentUser -Force\n"),
+    "meta.json": {"os": ["windows"]},
 }
 D["schtasks"] = {
     "cmd.cmd": ("schtasks /create /tn \"HelloScript\" /tr \"%CD%\\hello.cmd\" /sc daily /st 08:00 /f\n"
