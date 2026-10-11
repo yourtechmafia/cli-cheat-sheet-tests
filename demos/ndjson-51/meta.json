@@ -4,5 +4,6 @@
   ],
   "extra_files": [
     "ndjson/books.ndjson"
-  ]
+  ],
+  "utf8": true
 }

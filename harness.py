@@ -155,6 +155,8 @@ def run_task(task, shell, family, root, portability):
         text = task.get("pwsh51", task.get("pwsh"))
     else:
         text = task.get(family if family != "pwsh51" else "pwsh")
+    if text is not None and task.get("probe"):
+        text = text + "\n" + task["probe"]["pwsh" if family == "pwsh51" else family]
     result = {"task_id": task["id"], "task": task["task"], "shell": shell, "command": text}
     if text is None:
         result.update(status="interactive" if task.get("interactive") else "no built-in equivalent",
@@ -190,12 +192,12 @@ def run_task(task, shell, family, root, portability):
 
     if task.get("persist") and ctx["exit"] == 0:
         if IS_WINDOWS:
-            probe = "[Environment]::GetEnvironmentVariable('API_KEY','User')"
+            probe = "[Environment]::GetEnvironmentVariable('GREETING','User')"
             ctx["persist_out"] = run(["powershell", "-NoProfile", "-Command", probe])[1]
             run(["powershell", "-NoProfile", "-Command",
-                 "[Environment]::SetEnvironmentVariable('API_KEY',$null,'User')"])
+                 "[Environment]::SetEnvironmentVariable('GREETING',$null,'User')"])
         else:
-            ctx["persist_out"] = run([shutil.which(shell), "-i", "-c", "echo $API_KEY"], env=env)[1]
+            ctx["persist_out"] = run([shutil.which(shell), "-i", "-c", "echo $GREETING"], env=env)[1]
 
     if sleeper is not None:
         for _ in range(30):

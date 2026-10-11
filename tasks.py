@@ -3,6 +3,10 @@ that verifies the command did what it claims (not only that it exited 0).
 
 Placeholders the harness fills in:
   {pid}   process id of a throwaway sleeper process (task 29)
+
+A "probe" is a shell-native command that runs after the task's command to show its effect
+(for example, print the current folder after `cd`). It is never part of what's being tested:
+in portability mode the bash command runs verbatim, followed by each shell's own probe.
   {home}  the home folder the harness uses for the run
 """
 
@@ -78,12 +82,14 @@ TASKS = [
     },
     {
         "id": 3, "task": "Change folder",
-        "posix": "cd docs\npwd", "pwsh": "Set-Location docs\nGet-Location", "cmd": "cd docs\ncd",
+        "posix": "cd docs", "pwsh": "Set-Location docs", "cmd": "cd docs",
+        "probe": {"posix": "pwd", "pwsh": "(Get-Location).Path", "cmd": "cd"},
         "check": lambda c: _out(c).strip().splitlines()[-1].rstrip("\\/").endswith("docs") if _out(c).strip() else False,
     },
     {
         "id": 4, "task": "Go to your home folder",
-        "posix": "cd ~\npwd", "pwsh": "Set-Location ~\nGet-Location", "cmd": "cd /d %USERPROFILE%\ncd",
+        "posix": "cd ~", "pwsh": "Set-Location ~", "cmd": "cd /d %USERPROFILE%",
+        "probe": {"posix": "pwd", "pwsh": "(Get-Location).Path", "cmd": "cd"},
         "check": lambda c: os.path.basename(c["home"].rstrip("\\/")) in _out(c),
     },
     {
@@ -177,17 +183,17 @@ TASKS = [
     },
     {
         "id": 22, "task": "Set an environment variable for this session",
-        "posix": "export API_KEY=abc123\necho $API_KEY", "pwsh": "$env:API_KEY = \"abc123\"\n$env:API_KEY",
-        "cmd": "set API_KEY=abc123\necho %API_KEY%",
-        "check": lambda c: "abc123" in _out(c),
+        "posix": "export GREETING=hello\necho $GREETING", "pwsh": "$env:GREETING = \"hello\"\n$env:GREETING",
+        "cmd": "set GREETING=hello\necho %GREETING%",
+        "check": lambda c: "hello" in _out(c),
     },
     {
         "id": 23, "task": "Set an environment variable permanently",
-        "posix": "echo 'export API_KEY=abc123' >> ~/{rcfile}",
-        "pwsh": "[Environment]::SetEnvironmentVariable(\"API_KEY\", \"abc123\", \"User\")",
-        "cmd": "setx API_KEY abc123",
+        "posix": "echo 'export GREETING=hello' >> ~/{rcfile}",
+        "pwsh": "[Environment]::SetEnvironmentVariable(\"GREETING\", \"hello\", \"User\")",
+        "cmd": "setx GREETING hello",
         "persist": True,
-        "check": lambda c: "abc123" in c.get("persist_out", ""),
+        "check": lambda c: "hello" in c.get("persist_out", ""),
     },
     {
         "id": 24, "task": "Show PATH",

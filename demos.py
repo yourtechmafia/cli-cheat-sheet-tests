@@ -32,11 +32,10 @@ OS_NAME = "windows" if IS_WINDOWS else ("darwin" if sys.platform == "darwin" els
 ANSI = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
 IPV4 = re.compile(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b")
 TRACE = re.compile(r"Root=1-[0-9a-f]+-[0-9a-f]+")
-# Not part of any example. A console window draws Unicode directly; a redirected PowerShell
-# writes in the OEM code page unless told otherwise, so we ask for UTF-8 to capture what the
-# screen would show. Windows PowerShell 5.1 also prints a progress record on first use.
-PS_SETUP = "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8\n"
-PS51_SETUP = PS_SETUP + "$ProgressPreference = 'SilentlyContinue'\n"
+# Not part of any example, and only added when a demo asks for it (meta "utf8"), so error line
+# numbers match the snippet. A console draws Unicode directly; a redirected PowerShell writes in
+# the OEM code page unless told otherwise, so UTF-8 output needs this to be captured as shown.
+PS_UTF8 = "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8\n"
 
 
 def pick_file(folder, shell, family):
@@ -55,12 +54,12 @@ def pick_file(folder, shell, family):
     return None
 
 
-def argv_for(shell, family, path, text, extra):
+def argv_for(shell, family, path, text, extra, utf8=False):
     exe = shutil.which(shell)
     if family == "posix":
         return [shell, "-s"], open(path, "rb")  # script on stdin: errors read "bash: line 3: ..." not a temp path
     if family in ("pwsh", "pwsh51"):
-        body = (PS51_SETUP if family == "pwsh51" else PS_SETUP) + text
+        body = (PS_UTF8 if utf8 else "") + text
         enc = base64.b64encode(body.encode("utf-16-le")).decode("ascii")
         return [exe, *extra, "-NoProfile", "-NonInteractive", "-OutputFormat", "Text", "-EncodedCommand", enc], subprocess.DEVNULL
     return [exe, "/d", "/c", path], subprocess.DEVNULL
@@ -131,7 +130,8 @@ def run_demo(name, root):
                 f.write("@echo off\n" + body)
         with open(os.path.join(folder, fname), encoding="utf-8") as f:
             text = f.read()
-        argv, stdin = argv_for(shell, family, path, text, meta.get("pwsh_args", []) if family != "posix" else [])
+        argv, stdin = argv_for(shell, family, path, text, meta.get("pwsh_args", []) if family != "posix" else [],
+                               utf8=meta.get("utf8", False))
         try:
             p = subprocess.run(argv, executable=shutil.which(shell), cwd=cwd, env=env, stdin=stdin, stdout=subprocess.PIPE,
                                stderr=subprocess.STDOUT, timeout=meta.get("timeout", 60))

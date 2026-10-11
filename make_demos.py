@@ -197,12 +197,12 @@ D["execution-policy-fix"] = {
     "meta.json": {"os": ["windows"]},
 }
 D["schtasks"] = {
-    "cmd.cmd": ("schtasks /create /tn \"HelloScript\" /tr \"%CD%\\hello.cmd\" /sc daily /st 08:00 /f\n"
+    "cmd.cmd": ("schtasks /create /tn \"HelloScript\" /tr \"\\\"%CD%\\hello.cmd\\\"\" /sc daily /st 08:00 /f\n"
                 "schtasks /query /tn \"HelloScript\"\nschtasks /delete /tn \"HelloScript\" /f\n"),
     "meta.json": {"os": ["windows"]},
 }
 D["register-task"] = {
-    "pwsh.ps1": ("$action  = New-ScheduledTaskAction -Execute \"pwsh.exe\" -Argument \"-File $PWD\\hello.ps1\"\n"
+    "pwsh.ps1": ("$action  = New-ScheduledTaskAction -Execute \"pwsh.exe\" -Argument \"-File `\"$PWD\\hello.ps1`\"\"\n"
                  "$trigger = New-ScheduledTaskTrigger -Daily -At 8am\n"
                  "Register-ScheduledTask -TaskName \"HelloScript\" -Action $action -Trigger $trigger | Select-Object TaskName, State\n"
                  "Unregister-ScheduledTask -TaskName \"HelloScript\" -Confirm:$false\n"),
@@ -218,11 +218,11 @@ D["api-json"] = {
 D["ndjson"] = {
     "posix.sh": "jq -r '[.body.price, .body.title] | @tsv' books.ndjson | sort\n",
     "pwsh.ps1": "Get-Content books.ndjson | ConvertFrom-Json | ForEach-Object body | Sort-Object price | Format-Table price, title\n",
-    "meta.json": {"extra_files": ["ndjson/books.ndjson"]},
+    "meta.json": {"extra_files": ["ndjson/books.ndjson"], "utf8": True},
 }
 D["ndjson-51"] = {
     "powershell.ps1": "Get-Content books.ndjson -Encoding UTF8 | ConvertFrom-Json | ForEach-Object body | Sort-Object price | Format-Table price, title\n",
-    "meta.json": {"os": ["windows"], "extra_files": ["ndjson/books.ndjson"]},
+    "meta.json": {"os": ["windows"], "extra_files": ["ndjson/books.ndjson"], "utf8": True},
 }
 
 # --- Safety ------------------------------------------------------------------------------
