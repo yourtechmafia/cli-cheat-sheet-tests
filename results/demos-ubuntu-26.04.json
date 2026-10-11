@@ -1,0 +1,228 @@
+{
+  "label": "ubuntu-26.04",
+  "machine": {
+    "python": "3.14.4",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.43",
+    "machine": "x86_64",
+    "os_release": "Ubuntu 26.04.1 LTS",
+    "curl": "curl 8.18.0 (x86_64-pc-linux-gnu) libcurl/8.18.0 OpenSSL/3.5.5 zlib/1.3.1 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.2 libssh2/1.11.1 nghttp2/1.68.0 librtmp/2.3 mit-krb5/1.22.1 OpenLDAP/2.6.10"
+  },
+  "shells": {
+    "bash": "GNU bash, version 5.3.9(1)-release (x86_64-pc-linux-gnu)"
+  },
+  "demos": [
+    {
+      "demo": "alias",
+      "shell": "bash",
+      "file": "bash.sh",
+      "code": "echo \"alias ll='ls -la'\" >> ~/.bashrc\n",
+      "exit": 0,
+      "output": "",
+      "followup": {
+        "command": "ll notes.txt",
+        "exit": 0,
+        "output": "bash: cannot set terminal process group (3532): Inappropriate ioctl for device\nbash: no job control in this shell\n-rw-r--r-- 1 root root 12 Oct 11 11:56 notes.txt\n"
+      }
+    },
+    {
+      "demo": "anatomy",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "git init -q practice-repo\ncd practice-repo\necho \"hello\" > README.md\ngit add README.md\ngit commit -m \"Fix typo\"\n",
+      "exit": 0,
+      "output": "[master (root-commit) 9637d00] Fix typo\n 1 file changed, 1 insertion(+)\n create mode 100644 README.md\n"
+    },
+    {
+      "demo": "and-or",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "mkdir out && echo \"created\" || echo \"failed\"\nmkdir out && echo \"created\" || echo \"failed\"\n",
+      "exit": 0,
+      "output": "created\nmkdir: out: File exists\nfailed\n"
+    },
+    {
+      "demo": "api-json",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "curl -s https://api.github.com/repos/curl/curl/releases/latest | jq -r '.tag_name, .published_at'\n",
+      "exit": 0,
+      "output": "curl-8_22_0\n2026-09-02T05:59:35Z\n"
+    },
+    {
+      "demo": "double-dash",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "touch -- -oops.txt\nls -oops.txt\nls -- -oops.txt\nrm -- -oops.txt\n",
+      "exit": 0,
+      "output": "error: unexpected argument '-.' found\n\n  tip: to pass '-.' as a value, use '-- -.'\n\nUsage: ls [OPTION]... [FILE]...\n\nFor more information, try '--help'.\n-oops.txt\n"
+    },
+    {
+      "demo": "env-permanent",
+      "shell": "bash",
+      "file": "bash.sh",
+      "code": "echo 'export GREETING=\"hello\"' >> ~/.bashrc\nsource ~/.bashrc\necho $GREETING\n",
+      "exit": 0,
+      "output": "hello\n"
+    },
+    {
+      "demo": "env-session",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "GREETING=\"hello\"\nbash -c 'echo \"child sees: [$GREETING]\"'\nexport GREETING\nbash -c 'echo \"child sees: [$GREETING]\"'\n",
+      "exit": 0,
+      "output": "child sees: []\nchild sees: [hello]\n"
+    },
+    {
+      "demo": "escape",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "echo \"Price: \\$5 and a \\\"quote\\\"\"\n",
+      "exit": 0,
+      "output": "Price: $5 and a \"quote\"\n"
+    },
+    {
+      "demo": "exit-codes",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "grep zzz log.txt\necho \"grep found nothing: $?\"\nnosuchcommand\necho \"command not found: $?\"\n./hello.sh\necho \"not executable: $?\"\nsh -c 'kill -INT $$'\necho \"stopped by Ctrl+C (SIGINT): $?\"\n",
+      "exit": 0,
+      "output": "grep found nothing: 1\nbash: line 3: nosuchcommand: command not found\ncommand not found: 127\nbash: line 5: ./hello.sh: Permission denied\nnot executable: 126\nstopped by Ctrl+C (SIGINT): 130\n"
+    },
+    {
+      "demo": "help",
+      "shell": "bash",
+      "file": "posix.linux.sh",
+      "code": "ls --help | head -n 4\n",
+      "exit": 0,
+      "output": "List directory contents.\nIgnore files and directories starting with a '.' by default\n\nUsage: ls [OPTION]... [FILE]...\n"
+    },
+    {
+      "demo": "long-options",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "grep -i -c error log.txt\ngrep --ignore-case --count error log.txt\n",
+      "exit": 0,
+      "output": "2\n2\n"
+    },
+    {
+      "demo": "ls-missing",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "ls missing.txt\necho \"exit code: $?\"\n",
+      "exit": 0,
+      "output": "ls: cannot access 'missing.txt': No such file or directory\nexit code: 2\n"
+    },
+    {
+      "demo": "ndjson",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "jq -r '[.body.price, .body.title] | @tsv' books.ndjson | sort\n",
+      "exit": 0,
+      "output": "\u00a347.82\tSharp Objects\n\u00a350.10\tSoumission\n\u00a351.77\tA Light in the Attic\n\u00a353.74\tTipping the Velvet\n\u00a354.23\tSapiens: A Brief History of Humankind\n"
+    },
+    {
+      "demo": "noclobber",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "set -o noclobber\necho \"oops\" > notes.txt\ncat notes.txt\n",
+      "exit": 0,
+      "output": "bash: line 2: notes.txt: cannot overwrite existing file\nhello\nworld\n"
+    },
+    {
+      "demo": "path",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "echo $PATH | tr ':' '\\n'\n",
+      "exit": 0,
+      "output": "/usr/local/sbin\n/usr/local/bin\n/usr/sbin\n/usr/bin\n/sbin\n/bin\n"
+    },
+    {
+      "demo": "pipe",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "grep ERROR log.txt | wc -l\n",
+      "exit": 0,
+      "output": "2\n"
+    },
+    {
+      "demo": "pipe-objects",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "ls -lS *.txt | head -n 3\n",
+      "exit": 0,
+      "output": "-rw-r--r-- 1 root root 222 Oct 11 11:56 log.txt\n-rw-r--r-- 1 root root  33 Oct 11 11:56 names.txt\n-rw-r--r-- 1 root root  12 Oct 11 11:56 notes.txt\n"
+    },
+    {
+      "demo": "quote-json",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "curl -s https://httpbin.org/anything --json '{\"title\":\"h1\"}' | grep '\"data\"'\n",
+      "exit": 0,
+      "output": "  \"data\": \"{\\\"title\\\":\\\"h1\\\"}\", \n"
+    },
+    {
+      "demo": "quote-url",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "curl -s \"https://httpbin.org/anything?q=cli&page=2\" | grep '\"args\"' -A 3\n",
+      "exit": 0,
+      "output": "  \"args\": {\n    \"page\": \"2\", \n    \"q\": \"cli\"\n  }, \n"
+    },
+    {
+      "demo": "quote-url-unquoted",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "curl -s https://httpbin.org/anything?q=cli&page=2\n",
+      "exit": 0,
+      "output": "{\n  \"args\": {\n    \"q\": \"cli\"\n  }, \n  \"data\": \"\", \n  \"files\": {}, \n  \"form\": {}, \n  \"headers\": {\n    \"Accept\": \"*/*\", \n    \"Host\": \"httpbin.org\", \n    \"User-Agent\": \"curl/8.18.0\", \n    \"X-Amzn-Trace-Id\": \"Root=1-xxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx\"\n  }, \n  \"json\": null, \n  \"method\": \"GET\", \n  \"origin\": \"203.0.113.7\", \n  \"url\": \"https://httpbin.org/anything?q=cli\"\n}\n"
+    },
+    {
+      "demo": "quotes",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "echo 'Home is $HOME'\necho \"Home is $HOME\"\n",
+      "exit": 0,
+      "output": "Home is $HOME\nHome is ~\n"
+    },
+    {
+      "demo": "redirect",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "ls notes.txt missing.txt > out.txt 2> errors.txt\ncat out.txt\ncat errors.txt\necho \"first\" > report.txt\necho \"second\" >> report.txt\ncat report.txt\nls notes.txt missing.txt > all.txt 2>&1\ncat all.txt\n",
+      "exit": 0,
+      "output": "notes.txt\nls: cannot access 'missing.txt': No such file or directory\nfirst\nsecond\nls: cannot access 'missing.txt': No such file or directory\nnotes.txt\n"
+    },
+    {
+      "demo": "rm-interactive",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "printf 'n\\n' | rm -i notes.txt\nls notes.txt\n",
+      "exit": 0,
+      "output": "rm: remove regular file 'notes.txt'? notes.txt\n"
+    },
+    {
+      "demo": "script-bash",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "./hello.sh\nchmod +x hello.sh\n./hello.sh\nhello.sh\n",
+      "exit": 127,
+      "output": "bash: line 1: ./hello.sh: Permission denied\nHello from bash\nbash: line 4: hello.sh: command not found\n"
+    },
+    {
+      "demo": "which",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "command -v curl\n",
+      "exit": 0,
+      "output": "/usr/bin/curl\n"
+    },
+    {
+      "demo": "wildcards",
+      "shell": "bash",
+      "file": "posix.sh",
+      "code": "echo *.txt\necho \"*.txt\"\necho *.zzz\n",
+      "exit": 0,
+      "output": "file.txt log.txt names.txt notes.txt old.txt\n*.txt\n*.zzz\n"
+    }
+  ]
+}

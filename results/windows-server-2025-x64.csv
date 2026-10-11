@@ -1,0 +1,111 @@
+task_id,task,shell,status,exit,command
+1,Where am I (print the current folder),pwsh,works,0,Get-Location
+2,"List files, including hidden ones",pwsh,works,0,Get-ChildItem -Force
+3,Change folder,pwsh,works,0,"Set-Location docs
+Get-Location"
+4,Go to your home folder,pwsh,works,0,"Set-Location ~
+Get-Location"
+5,Make nested folders,pwsh,works,0,New-Item -ItemType Directory -Path a/b/c -Force
+6,Create an empty file,pwsh,works,0,New-Item -ItemType File -Path empty.txt
+7,Copy a file,pwsh,works,0,Copy-Item notes.txt notes-copy.txt
+8,Copy a folder,pwsh,works,0,Copy-Item docs docs-backup -Recurse
+9,Move or rename,pwsh,works,0,Move-Item old.txt new.txt
+10,Delete a file,pwsh,works,0,Remove-Item file.txt
+11,Delete a folder and its contents,pwsh,works,0,Remove-Item folder -Recurse
+12,Print a file,pwsh,works,0,Get-Content notes.txt
+13,Show the first and last lines,pwsh,works,0,"Get-Content log.txt -TotalCount 3
+Get-Content log.txt -Tail 3"
+14,Follow a log as it grows,pwsh,works,1,Get-Content log.txt -Wait
+15,Search for text in a file,pwsh,works,0,Select-String -Pattern error -Path log.txt
+16,Find files by name,pwsh,works,0,Get-ChildItem -Recurse -Filter *.txt
+17,Count lines,pwsh,works,0,(Get-Content log.txt | Measure-Object -Line).Lines
+18,Sort and remove duplicates,pwsh,works,0,Get-Content names.txt | Sort-Object -Unique
+19,Show the last exit code,pwsh,works,0,"findstr zzz log.txt
+$LASTEXITCODE"
+20,Run B only if A succeeds,pwsh,works,0,mkdir out && echo created
+21,Read an environment variable,pwsh,works,0,$env:USERPROFILE
+22,Set an environment variable for this session,pwsh,works,0,"$env:API_KEY = ""abc123""
+$env:API_KEY"
+23,Set an environment variable permanently,pwsh,works,0,"[Environment]::SetEnvironmentVariable(""API_KEY"", ""abc123"", ""User"")"
+24,Show PATH,pwsh,works,0,$env:PATH
+25,Find which program a command runs,pwsh,works,0,Get-Command curl
+26,Get help for a command,pwsh,works,0,Get-Help Get-ChildItem
+27,Search command history,pwsh,interactive,,
+28,Clear the screen,pwsh,works,0,Clear-Host
+29,List and stop a process,pwsh,works,0,"Get-Process -Id 5620
+Stop-Process -Id 5620"
+30,Download a URL to a file,pwsh,works,0,Invoke-WebRequest https://example.com -OutFile page.html
+31,Run a script,pwsh,works,0,.\hello.ps1
+1,Where am I (print the current folder),powershell,works,0,Get-Location
+2,"List files, including hidden ones",powershell,works,0,Get-ChildItem -Force
+3,Change folder,powershell,works,0,"Set-Location docs
+Get-Location"
+4,Go to your home folder,powershell,works,0,"Set-Location ~
+Get-Location"
+5,Make nested folders,powershell,works,0,New-Item -ItemType Directory -Path a/b/c -Force
+6,Create an empty file,powershell,works,0,New-Item -ItemType File -Path empty.txt
+7,Copy a file,powershell,works,0,Copy-Item notes.txt notes-copy.txt
+8,Copy a folder,powershell,works,0,Copy-Item docs docs-backup -Recurse
+9,Move or rename,powershell,works,0,Move-Item old.txt new.txt
+10,Delete a file,powershell,works,0,Remove-Item file.txt
+11,Delete a folder and its contents,powershell,works,0,Remove-Item folder -Recurse
+12,Print a file,powershell,works,0,Get-Content notes.txt
+13,Show the first and last lines,powershell,works,0,"Get-Content log.txt -TotalCount 3
+Get-Content log.txt -Tail 3"
+14,Follow a log as it grows,powershell,works,1,Get-Content log.txt -Wait
+15,Search for text in a file,powershell,works,0,Select-String -Pattern error -Path log.txt
+16,Find files by name,powershell,works,0,Get-ChildItem -Recurse -Filter *.txt
+17,Count lines,powershell,works,0,(Get-Content log.txt | Measure-Object -Line).Lines
+18,Sort and remove duplicates,powershell,works,0,Get-Content names.txt | Sort-Object -Unique
+19,Show the last exit code,powershell,works,0,"findstr zzz log.txt
+$LASTEXITCODE"
+20,Run B only if A succeeds,powershell,works,0,mkdir out; if ($?) { echo created }
+21,Read an environment variable,powershell,works,0,$env:USERPROFILE
+22,Set an environment variable for this session,powershell,works,0,"$env:API_KEY = ""abc123""
+$env:API_KEY"
+23,Set an environment variable permanently,powershell,works,0,"[Environment]::SetEnvironmentVariable(""API_KEY"", ""abc123"", ""User"")"
+24,Show PATH,powershell,works,0,$env:PATH
+25,Find which program a command runs,powershell,works,0,Get-Command curl
+26,Get help for a command,powershell,works,0,Get-Help Get-ChildItem
+27,Search command history,powershell,interactive,,
+28,Clear the screen,powershell,works,0,Clear-Host
+29,List and stop a process,powershell,works,0,"Get-Process -Id 768
+Stop-Process -Id 768"
+30,Download a URL to a file,powershell,works,0,Invoke-WebRequest https://example.com -OutFile page.html
+31,Run a script,powershell,works,0,.\hello.ps1
+1,Where am I (print the current folder),cmd,works,0,cd
+2,"List files, including hidden ones",cmd,works,0,dir /a
+3,Change folder,cmd,works,0,"cd docs
+cd"
+4,Go to your home folder,cmd,works,0,"cd /d %USERPROFILE%
+cd"
+5,Make nested folders,cmd,works,0,mkdir a\b\c
+6,Create an empty file,cmd,works,0,type nul > empty.txt
+7,Copy a file,cmd,works,0,copy notes.txt notes-copy.txt
+8,Copy a folder,cmd,works,0,xcopy docs docs-backup /e /i /q
+9,Move or rename,cmd,works,0,move old.txt new.txt
+10,Delete a file,cmd,works,0,del file.txt
+11,Delete a folder and its contents,cmd,works,0,rmdir /s /q folder
+12,Print a file,cmd,works,0,type notes.txt
+13,Show the first and last lines,cmd,no built-in equivalent,,
+14,Follow a log as it grows,cmd,no built-in equivalent,,
+15,Search for text in a file,cmd,works,0,findstr /i error log.txt
+16,Find files by name,cmd,works,0,dir /s /b *.txt
+17,Count lines,cmd,works,0,"find /c /v """" < log.txt"
+18,Sort and remove duplicates,cmd,works,0,sort /unique names.txt
+19,Show the last exit code,cmd,works,0,"findstr zzz log.txt
+echo %ERRORLEVEL%"
+20,Run B only if A succeeds,cmd,works,0,mkdir out && echo created
+21,Read an environment variable,cmd,works,0,echo %USERPROFILE%
+22,Set an environment variable for this session,cmd,works,0,"set API_KEY=abc123
+echo %API_KEY%"
+23,Set an environment variable permanently,cmd,works,0,setx API_KEY abc123
+24,Show PATH,cmd,works,0,echo %PATH%
+25,Find which program a command runs,cmd,works,0,where curl
+26,Get help for a command,cmd,works,1,dir /?
+27,Search command history,cmd,interactive,,
+28,Clear the screen,cmd,works,0,cls
+29,List and stop a process,cmd,works,0,"tasklist /fi ""PID eq 2832""
+taskkill /pid 2832 /f"
+30,Download a URL to a file,cmd,works,0,curl -sSo page.html https://example.com
+31,Run a script,cmd,works,0,hello.cmd

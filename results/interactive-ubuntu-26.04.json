@@ -1,0 +1,27 @@
+{
+  "history": [
+    {
+      "shell": "bash",
+      "ignore_option": false,
+      "rc": "HISTFILE=~/.bash_history",
+      "history_file": "echo visible-command\n export API_KEY=secret-test-value\nexit",
+      "visible_saved": true,
+      "spaced_saved": true
+    },
+    {
+      "shell": "bash",
+      "ignore_option": true,
+      "rc": "HISTFILE=~/.bash_history\nHISTCONTROL=ignorespace",
+      "history_file": "echo visible-command\nexit",
+      "visible_saved": true,
+      "spaced_saved": false
+    }
+  ],
+  "alias_in_script": [
+    {
+      "shell": "bash",
+      "script_exit": 127,
+      "script_output": "uses-alias.sh: line 1: ll: command not found"
+    }
+  ]
+}

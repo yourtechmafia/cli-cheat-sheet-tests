@@ -1,0 +1,77 @@
+task_id,task,shell,status,exit,command
+1,Where am I (print the current folder),zsh,works,0,pwd
+2,"List files, including hidden ones",zsh,works,0,ls -la
+3,Change folder,zsh,works,0,"cd docs
+pwd"
+4,Go to your home folder,zsh,works,0,"cd ~
+pwd"
+5,Make nested folders,zsh,works,0,mkdir -p a/b/c
+6,Create an empty file,zsh,works,0,touch empty.txt
+7,Copy a file,zsh,works,0,cp notes.txt notes-copy.txt
+8,Copy a folder,zsh,works,0,cp -r docs docs-backup
+9,Move or rename,zsh,works,0,mv old.txt new.txt
+10,Delete a file,zsh,works,0,rm file.txt
+11,Delete a folder and its contents,zsh,works,0,rm -r folder
+12,Print a file,zsh,works,0,cat notes.txt
+13,Show the first and last lines,zsh,works,0,"head -n 3 log.txt
+tail -n 3 log.txt"
+14,Follow a log as it grows,zsh,works,-15,tail -f log.txt
+15,Search for text in a file,zsh,works,0,grep -i error log.txt
+16,Find files by name,zsh,works,0,"find . -name ""*.txt"""
+17,Count lines,zsh,works,0,wc -l < log.txt
+18,Sort and remove duplicates,zsh,works,0,sort -u names.txt
+19,Show the last exit code,zsh,works,0,"grep zzz log.txt
+echo $?"
+20,Run B only if A succeeds,zsh,works,0,mkdir out && echo created
+21,Read an environment variable,zsh,works,0,echo $HOME
+22,Set an environment variable for this session,zsh,works,0,"export API_KEY=abc123
+echo $API_KEY"
+23,Set an environment variable permanently,zsh,works,0,echo 'export API_KEY=abc123' >> ~/.zshrc
+24,Show PATH,zsh,works,0,echo $PATH
+25,Find which program a command runs,zsh,works,0,command -v curl
+26,Get help for a command,zsh,failed,1,ls --help
+27,Search command history,zsh,interactive,,
+28,Clear the screen,zsh,works,0,clear
+29,List and stop a process,zsh,works,0,"ps -p 1289
+kill 1289"
+30,Download a URL to a file,zsh,works,0,curl -sSo page.html https://example.com
+31,Run a script,zsh,works,0,"chmod +x hello.sh
+./hello.sh"
+1,Where am I (print the current folder),bash,works,0,pwd
+2,"List files, including hidden ones",bash,works,0,ls -la
+3,Change folder,bash,works,0,"cd docs
+pwd"
+4,Go to your home folder,bash,works,0,"cd ~
+pwd"
+5,Make nested folders,bash,works,0,mkdir -p a/b/c
+6,Create an empty file,bash,works,0,touch empty.txt
+7,Copy a file,bash,works,0,cp notes.txt notes-copy.txt
+8,Copy a folder,bash,works,0,cp -r docs docs-backup
+9,Move or rename,bash,works,0,mv old.txt new.txt
+10,Delete a file,bash,works,0,rm file.txt
+11,Delete a folder and its contents,bash,works,0,rm -r folder
+12,Print a file,bash,works,0,cat notes.txt
+13,Show the first and last lines,bash,works,0,"head -n 3 log.txt
+tail -n 3 log.txt"
+14,Follow a log as it grows,bash,works,-15,tail -f log.txt
+15,Search for text in a file,bash,works,0,grep -i error log.txt
+16,Find files by name,bash,works,0,"find . -name ""*.txt"""
+17,Count lines,bash,works,0,wc -l < log.txt
+18,Sort and remove duplicates,bash,works,0,sort -u names.txt
+19,Show the last exit code,bash,works,0,"grep zzz log.txt
+echo $?"
+20,Run B only if A succeeds,bash,works,0,mkdir out && echo created
+21,Read an environment variable,bash,works,0,echo $HOME
+22,Set an environment variable for this session,bash,works,0,"export API_KEY=abc123
+echo $API_KEY"
+23,Set an environment variable permanently,bash,works,0,echo 'export API_KEY=abc123' >> ~/.bashrc
+24,Show PATH,bash,works,0,echo $PATH
+25,Find which program a command runs,bash,works,0,command -v curl
+26,Get help for a command,bash,failed,1,ls --help
+27,Search command history,bash,interactive,,
+28,Clear the screen,bash,works,0,clear
+29,List and stop a process,bash,works,0,"ps -p 1353
+kill 1353"
+30,Download a URL to a file,bash,works,0,curl -sSo page.html https://example.com
+31,Run a script,bash,works,0,"chmod +x hello.sh
+./hello.sh"

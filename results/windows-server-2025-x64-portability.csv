@@ -1,0 +1,115 @@
+task_id,task,shell,status,exit,command
+1,Where am I (print the current folder),pwsh,works,0,pwd
+2,"List files, including hidden ones",pwsh,failed,1,ls -la
+3,Change folder,pwsh,works,0,"cd docs
+pwd"
+4,Go to your home folder,pwsh,works,0,"cd ~
+pwd"
+5,Make nested folders,pwsh,works,0,mkdir -p a/b/c
+6,Create an empty file,pwsh,failed,1,touch empty.txt
+7,Copy a file,pwsh,works,0,cp notes.txt notes-copy.txt
+8,Copy a folder,pwsh,works,0,cp -r docs docs-backup
+9,Move or rename,pwsh,works,0,mv old.txt new.txt
+10,Delete a file,pwsh,works,0,rm file.txt
+11,Delete a folder and its contents,pwsh,works,0,rm -r folder
+12,Print a file,pwsh,works,0,cat notes.txt
+13,Show the first and last lines,pwsh,failed,1,"head -n 3 log.txt
+tail -n 3 log.txt"
+14,Follow a log as it grows,pwsh,failed,1,tail -f log.txt
+15,Search for text in a file,pwsh,failed,1,grep -i error log.txt
+16,Find files by name,pwsh,failed,1,"find . -name ""*.txt"""
+17,Count lines,pwsh,failed,1,wc -l < log.txt
+18,Sort and remove duplicates,pwsh,failed,0,sort -u names.txt
+19,Show the last exit code,pwsh,failed,0,"grep zzz log.txt
+echo $?"
+20,Run B only if A succeeds,pwsh,works,0,mkdir out && echo created
+21,Read an environment variable,pwsh,works,0,echo $HOME
+22,Set an environment variable for this session,pwsh,failed,0,"export API_KEY=abc123
+echo $API_KEY"
+23,Set an environment variable permanently,pwsh,failed,0,echo 'export API_KEY=abc123' >> ~/.bashrc
+24,Show PATH,pwsh,failed,0,echo $PATH
+25,Find which program a command runs,pwsh,failed,0,command -v curl
+26,Get help for a command,pwsh,failed,1,ls --help
+27,Search command history,pwsh,interactive,,
+28,Clear the screen,pwsh,works,0,clear
+29,List and stop a process,pwsh,works,0,"ps -p 2716
+kill 2716"
+30,Download a URL to a file,pwsh,works,0,curl -sSo page.html https://example.com
+31,Run a script,pwsh,failed,0,"chmod +x hello.sh
+./hello.sh"
+1,Where am I (print the current folder),powershell,works,0,pwd
+2,"List files, including hidden ones",powershell,failed,1,ls -la
+3,Change folder,powershell,works,0,"cd docs
+pwd"
+4,Go to your home folder,powershell,works,0,"cd ~
+pwd"
+5,Make nested folders,powershell,works,0,mkdir -p a/b/c
+6,Create an empty file,powershell,failed,1,touch empty.txt
+7,Copy a file,powershell,works,0,cp notes.txt notes-copy.txt
+8,Copy a folder,powershell,works,0,cp -r docs docs-backup
+9,Move or rename,powershell,works,0,mv old.txt new.txt
+10,Delete a file,powershell,works,0,rm file.txt
+11,Delete a folder and its contents,powershell,works,0,rm -r folder
+12,Print a file,powershell,works,0,cat notes.txt
+13,Show the first and last lines,powershell,failed,1,"head -n 3 log.txt
+tail -n 3 log.txt"
+14,Follow a log as it grows,powershell,failed,1,tail -f log.txt
+15,Search for text in a file,powershell,failed,1,grep -i error log.txt
+16,Find files by name,powershell,failed,1,"find . -name ""*.txt"""
+17,Count lines,powershell,failed,1,wc -l < log.txt
+18,Sort and remove duplicates,powershell,failed,0,sort -u names.txt
+19,Show the last exit code,powershell,failed,0,"grep zzz log.txt
+echo $?"
+20,Run B only if A succeeds,powershell,failed,1,mkdir out && echo created
+21,Read an environment variable,powershell,works,0,echo $HOME
+22,Set an environment variable for this session,powershell,failed,0,"export API_KEY=abc123
+echo $API_KEY"
+23,Set an environment variable permanently,powershell,failed,0,echo 'export API_KEY=abc123' >> ~/.bashrc
+24,Show PATH,powershell,failed,0,echo $PATH
+25,Find which program a command runs,powershell,failed,0,command -v curl
+26,Get help for a command,powershell,failed,1,ls --help
+27,Search command history,powershell,interactive,,
+28,Clear the screen,powershell,works,0,clear
+29,List and stop a process,powershell,works,0,"ps -p 6212
+kill 6212"
+30,Download a URL to a file,powershell,failed,1,curl -sSo page.html https://example.com
+31,Run a script,powershell,failed,0,"chmod +x hello.sh
+./hello.sh"
+1,Where am I (print the current folder),cmd,failed,1,pwd
+2,"List files, including hidden ones",cmd,failed,1,ls -la
+3,Change folder,cmd,failed,1,"cd docs
+pwd"
+4,Go to your home folder,cmd,failed,1,"cd ~
+pwd"
+5,Make nested folders,cmd,failed,1,mkdir -p a/b/c
+6,Create an empty file,cmd,failed,1,touch empty.txt
+7,Copy a file,cmd,failed,1,cp notes.txt notes-copy.txt
+8,Copy a folder,cmd,failed,1,cp -r docs docs-backup
+9,Move or rename,cmd,failed,1,mv old.txt new.txt
+10,Delete a file,cmd,failed,1,rm file.txt
+11,Delete a folder and its contents,cmd,failed,1,rm -r folder
+12,Print a file,cmd,failed,1,cat notes.txt
+13,Show the first and last lines,cmd,failed,1,"head -n 3 log.txt
+tail -n 3 log.txt"
+14,Follow a log as it grows,cmd,failed,1,tail -f log.txt
+15,Search for text in a file,cmd,failed,1,grep -i error log.txt
+16,Find files by name,cmd,failed,1,"find . -name ""*.txt"""
+17,Count lines,cmd,failed,1,wc -l < log.txt
+18,Sort and remove duplicates,cmd,failed,1,sort -u names.txt
+19,Show the last exit code,cmd,failed,0,"grep zzz log.txt
+echo $?"
+20,Run B only if A succeeds,cmd,works,0,mkdir out && echo created
+21,Read an environment variable,cmd,failed,0,echo $HOME
+22,Set an environment variable for this session,cmd,failed,0,"export API_KEY=abc123
+echo $API_KEY"
+23,Set an environment variable permanently,cmd,failed,1,echo 'export API_KEY=abc123' >> ~/.bashrc
+24,Show PATH,cmd,failed,0,echo $PATH
+25,Find which program a command runs,cmd,failed,1,command -v curl
+26,Get help for a command,cmd,failed,1,ls --help
+27,Search command history,cmd,interactive,,
+28,Clear the screen,cmd,failed,1,clear
+29,List and stop a process,cmd,failed,1,"ps -p 8852
+kill 8852"
+30,Download a URL to a file,cmd,works,0,curl -sSo page.html https://example.com
+31,Run a script,cmd,failed,1,"chmod +x hello.sh
+./hello.sh"
